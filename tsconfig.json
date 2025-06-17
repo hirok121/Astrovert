@@ -6,7 +6,9 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "esModuleInterop": true, // Added for better module interoperability
+    "jsx": "react-jsx" // Added to ensure JSX is processed correctly
   },
   "include": [
     "**/*.ts",
