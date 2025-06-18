@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Animated,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFocusEffect } from "@react-navigation/native";
 import { useAuth } from "../../contexts/AuthContext";
 import { playSound, SoundType, configureAudio } from "../../utils/soundManager";
 
@@ -140,6 +141,231 @@ const quizQuestions: QuizQuestion[] = [
       "The speed of light in a vacuum is exactly 299,792,458 meters per second, which is approximately 186,000 miles per second.",
     category: "Physics",
   },
+  {
+    id: 11,
+    question: "What is the largest planet in our solar system?",
+    options: ["Saturn", "Jupiter", "Neptune", "Uranus"],
+    correctAnswer: 1,
+    explanation:
+      "Jupiter is the largest planet in our solar system with a diameter of about 88,695 miles (142,800 kilometers).",
+    category: "Solar System",
+  },
+  {
+    id: 12,
+    question: "What is a black hole?",
+    options: [
+      "A cold, dark star",
+      "A region where gravity is so strong that nothing can escape",
+      "A type of nebula",
+      "A planetary system",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A black hole is a region of spacetime where gravitational forces are so strong that nothing, not even light, can escape once it crosses the event horizon.",
+    category: "Cosmic Phenomena",
+  },
+  {
+    id: 13,
+    question: "Which moon of Jupiter is known for its volcanic activity?",
+    options: ["Europa", "Ganymede", "Io", "Callisto"],
+    correctAnswer: 2,
+    explanation:
+      "Io is Jupiter's most volcanically active moon, with over 400 active volcanoes on its surface.",
+    category: "Solar System",
+  },
+  {
+    id: 14,
+    question: "What is the name of the boundary around a black hole?",
+    options: ["Event horizon", "Photon sphere", "Ergosphere", "Singularity"],
+    correctAnswer: 0,
+    explanation:
+      "The event horizon is the boundary around a black hole beyond which nothing can escape, not even light.",
+    category: "Cosmic Phenomena",
+  },
+  {
+    id: 15,
+    question: "Which planet is known as the 'Red Planet'?",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: 1,
+    explanation:
+      "Mars is known as the 'Red Planet' due to iron oxide (rust) on its surface, which gives it a reddish appearance.",
+    category: "Solar System",
+  },
+  {
+    id: 16,
+    question: "What is the Big Bang Theory?",
+    options: [
+      "A theory about star formation",
+      "The theory that the universe began from a single point",
+      "A theory about planetary motion",
+      "A theory about galaxy collisions",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The Big Bang Theory is the prevailing cosmological model explaining how the universe expanded from an initial singularity approximately 13.8 billion years ago.",
+    category: "Cosmology",
+  },
+  {
+    id: 17,
+    question: "What is the hottest planet in our solar system?",
+    options: ["Mercury", "Venus", "Mars", "Jupiter"],
+    correctAnswer: 1,
+    explanation:
+      "Venus is the hottest planet with surface temperatures around 900°F (462°C) due to its thick, toxic atmosphere that traps heat.",
+    category: "Solar System",
+  },
+  {
+    id: 18,
+    question: "What is a neutron star?",
+    options: [
+      "A star made of neutrons",
+      "The collapsed core of a massive star",
+      "A type of white dwarf",
+      "A binary star system",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A neutron star is the collapsed core of a massive star that has undergone a supernova explosion, consisting almost entirely of neutrons.",
+    category: "Cosmic Phenomena",
+  },
+  {
+    id: 19,
+    question: "How many Earth years does it take for Neptune to orbit the Sun?",
+    options: ["84 years", "165 years", "248 years", "30 years"],
+    correctAnswer: 1,
+    explanation:
+      "Neptune takes approximately 165 Earth years to complete one orbit around the Sun.",
+    category: "Solar System",
+  },
+  {
+    id: 20,
+    question: "What is the name of our galaxy?",
+    options: ["Andromeda", "Milky Way", "Whirlpool", "Triangulum"],
+    correctAnswer: 1,
+    explanation:
+      "Our galaxy is called the Milky Way, a barred spiral galaxy containing billions of stars including our Sun.",
+    category: "Galaxies",
+  },
+  {
+    id: 21,
+    question: "What causes the aurora (northern and southern lights)?",
+    options: [
+      "Solar radiation interacting with Earth's atmosphere",
+      "Reflection of city lights",
+      "Volcanic activity",
+      "Moon's gravitational pull",
+    ],
+    correctAnswer: 0,
+    explanation:
+      "Auroras are caused by solar particles interacting with Earth's magnetic field and atmosphere, creating beautiful light displays.",
+    category: "Space Phenomena",
+  },
+  {
+    id: 22,
+    question: "What is the asteroid belt?",
+    options: [
+      "A ring around Saturn",
+      "A region between Mars and Jupiter with many asteroids",
+      "A type of comet",
+      "A moon of Jupiter",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The asteroid belt is a region between Mars and Jupiter containing numerous asteroids, rocky objects left over from the solar system's formation.",
+    category: "Solar System",
+  },
+  {
+    id: 23,
+    question: "What is dark matter?",
+    options: [
+      "Matter that doesn't emit light",
+      "Black holes",
+      "Mysterious matter that makes up about 27% of the universe",
+      "Burnt-out stars",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Dark matter is a form of matter that makes up about 27% of the universe. It doesn't emit, absorb, or reflect light, making it invisible except through its gravitational effects.",
+    category: "Cosmology",
+  },
+  {
+    id: 24,
+    question: "Which space mission first landed humans on the Moon?",
+    options: ["Apollo 10", "Apollo 11", "Apollo 12", "Gemini 7"],
+    correctAnswer: 1,
+    explanation:
+      "Apollo 11 was the first mission to successfully land humans on the Moon on July 20, 1969, with Neil Armstrong and Buzz Aldrin.",
+    category: "Space Exploration",
+  },
+  {
+    id: 25,
+    question: "What is a quasar?",
+    options: [
+      "A type of star",
+      "A planet outside our solar system",
+      "An extremely bright galactic nucleus powered by a black hole",
+      "A type of comet",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "A quasar is an extremely luminous active galactic nucleus powered by a supermassive black hole at the center of a galaxy.",
+    category: "Cosmic Phenomena",
+  },
+  {
+    id: 26,
+    question: "What is the closest galaxy to the Milky Way?",
+    options: [
+      "Andromeda",
+      "Triangulum",
+      "Canis Major Dwarf",
+      "Large Magellanic Cloud",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "The Canis Major Dwarf Galaxy is the closest galaxy to the Milky Way, located about 25,000 light-years away.",
+    category: "Galaxies",
+  },
+  {
+    id: 27,
+    question: "What is the temperature of space?",
+    options: ["0°C", "-273°C", "2.7 Kelvin", "-200°C"],
+    correctAnswer: 2,
+    explanation:
+      "The temperature of space is approximately 2.7 Kelvin (-270.45°C), which is the temperature of the cosmic microwave background.",
+    category: "Physics",
+  },
+  {
+    id: 28,
+    question: "What is the largest moon in our solar system?",
+    options: ["Titan", "Ganymede", "Europa", "Callisto"],
+    correctAnswer: 1,
+    explanation:
+      "Ganymede, one of Jupiter's moons, is the largest moon in our solar system with a diameter larger than Mercury.",
+    category: "Solar System",
+  },
+  {
+    id: 29,
+    question: "What is a pulsar?",
+    options: [
+      "A variable star",
+      "A rotating neutron star that emits beams of radiation",
+      "A type of planet",
+      "A solar flare",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A pulsar is a highly magnetized rotating neutron star that emits beams of electromagnetic radiation from its poles.",
+    category: "Cosmic Phenomena",
+  },
+  {
+    id: 30,
+    question: "Which planet has the strongest magnetic field?",
+    options: ["Earth", "Jupiter", "Saturn", "Neptune"],
+    correctAnswer: 1,
+    explanation:
+      "Jupiter has the strongest magnetic field of all planets in our solar system, about 20,000 times stronger than Earth's.",
+    category: "Solar System",
+  },
 ];
 
 export default function AstronomyQuiz() {
@@ -153,16 +379,18 @@ export default function AstronomyQuiz() {
   const [quizStarted, setQuizStarted] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30); // 30 seconds per question
   const [timerActive, setTimerActive] = useState(false);
+  const [shuffledQuestions, setShuffledQuestions] = useState<QuizQuestion[]>(
+    []
+  );
+  const completedDueToNavigation = useRef(false); // Track if quiz was completed due to navigation
   // Animation for correct/incorrect feedback
   const feedbackAnimation = new Animated.Value(0);
   // Load sound effects
   useEffect(() => {
     configureAudio();
-  }, []);
-
-  // Timer effect
+  }, []); // Timer effect
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: ReturnType<typeof setInterval>;
 
     if (timerActive && timeLeft > 0) {
       interval = setInterval(() => {
@@ -173,8 +401,53 @@ export default function AstronomyQuiz() {
       handleAnswerSubmit();
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
   }, [timerActive, timeLeft]);
+  // Cleanup effect - Stop timer when component unmounts or user leaves
+  useEffect(() => {
+    return () => {
+      // Stop timer when component unmounts (user leaves the quiz)
+      setTimerActive(false);
+    };
+  }, []); // Handle screen focus changes - finish quiz when user navigates away, restart when returning
+  useFocusEffect(
+    React.useCallback(() => {
+      // Screen is focused - only restart if quiz was completed specifically due to navigation
+      if (completedDueToNavigation.current) {
+        completedDueToNavigation.current = false; // Reset the flag
+        if (quizCompleted) {
+          restartQuiz();
+        }
+      }
+      return () => {
+        // Screen is about to lose focus - finish the quiz if it's active
+        if (quizStarted && !quizCompleted) {
+          completedDueToNavigation.current = true; // Mark that quiz was completed due to navigation
+          setTimerActive(false);
+
+          // Add current answer if user selected but didn't submit
+          if (selectedAnswer !== null && !showExplanation) {
+            const newAnswers = [...userAnswers, selectedAnswer];
+            setUserAnswers(newAnswers);
+            // Only increment score if current answer is correct
+            if (
+              selectedAnswer ===
+              shuffledQuestions[currentQuestion]?.correctAnswer
+            ) {
+              setScore((prev) => prev + 1);
+            }
+          }
+          // Note: Don't recalculate score from scratch, trust the running score
+          completeQuiz();
+          console.log("Quiz finished due to navigation away");
+        }
+      };
+    }, [quizStarted, quizCompleted])
+  );
 
   // Play sound effect with error handling
   const playSoundEffect = async (soundType: SoundType) => {
@@ -185,8 +458,20 @@ export default function AstronomyQuiz() {
     }
   };
 
+  // Shuffle array function
+  const shuffleArray = (array: QuizQuestion[]) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   // Start quiz
   const startQuiz = () => {
+    const shuffled = shuffleArray(quizQuestions);
+    setShuffledQuestions(shuffled);
     setQuizStarted(true);
     setCurrentQuestion(0);
     setSelectedAnswer(null);
@@ -213,9 +498,8 @@ export default function AstronomyQuiz() {
     const finalAnswer = selectedAnswer !== null ? selectedAnswer : -1; // -1 for timeout
     const newAnswers = [...userAnswers, finalAnswer];
     setUserAnswers(newAnswers);
-
     const isCorrect =
-      finalAnswer === quizQuestions[currentQuestion].correctAnswer;
+      finalAnswer === shuffledQuestions[currentQuestion].correctAnswer;
     if (isCorrect) {
       setScore((prev) => prev + 1);
       playSoundEffect(SoundType.CORRECT);
@@ -238,11 +522,9 @@ export default function AstronomyQuiz() {
     ]).start();
 
     setShowExplanation(true);
-  };
-
-  // Move to next question
+  }; // Move to next question
   const handleNextQuestion = () => {
-    if (currentQuestion < quizQuestions.length - 1) {
+    if (currentQuestion < shuffledQuestions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
       setSelectedAnswer(null);
       setShowExplanation(false);
@@ -251,11 +533,11 @@ export default function AstronomyQuiz() {
     } else {
       completeQuiz();
     }
-  };
-  // Complete quiz
+  }; // Complete quiz
   const completeQuiz = () => {
     setQuizCompleted(true);
     setTimerActive(false);
+    completedDueToNavigation.current = false; // Reset navigation flag when quiz completes normally
     playSoundEffect(SoundType.COMPLETE);
 
     // Update high score if logged in
@@ -267,9 +549,7 @@ export default function AstronomyQuiz() {
         [{ text: "Awesome!", style: "default" }]
       );
     }
-  };
-
-  // Restart quiz
+  }; // Restart quiz
   const restartQuiz = () => {
     setQuizStarted(false);
     setCurrentQuestion(0);
@@ -280,7 +560,42 @@ export default function AstronomyQuiz() {
     setScore(0);
     setTimeLeft(30);
     setTimerActive(false);
+    setShuffledQuestions([]); // Clear shuffled questions
+    completedDueToNavigation.current = false; // Reset navigation flag
   };
+  // Handle finish quiz - allow user to finish quiz at any time
+  const handleFinishQuiz = () => {
+    Alert.alert(
+      "Finish Quiz",
+      "Are you sure you want to finish the quiz now? Your current progress will be saved.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Finish",
+          style: "destructive",
+          onPress: () => {
+            setTimerActive(false); // Add current question to answers if not submitted yet
+            if (!showExplanation && selectedAnswer !== null) {
+              const newAnswers = [...userAnswers, selectedAnswer];
+              setUserAnswers(newAnswers);
+              // Only increment score if current answer is correct
+              if (
+                selectedAnswer ===
+                shuffledQuestions[currentQuestion]?.correctAnswer
+              ) {
+                setScore((prev) => prev + 1);
+              }
+            }
+            completeQuiz();
+          },
+        },
+      ]
+    );
+  };
+
   // Get color for answer option
   const getOptionColor = (optionIndex: number): [string, string] => {
     if (!showExplanation) {
@@ -288,10 +603,8 @@ export default function AstronomyQuiz() {
         return ["rgba(74, 144, 226, 0.8)", "rgba(53, 122, 189, 0.8)"];
       }
       return ["rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.05)"];
-    }
-
-    // Show correct/incorrect after submission
-    if (optionIndex === quizQuestions[currentQuestion].correctAnswer) {
+    } // Show correct/incorrect after submission
+    if (optionIndex === shuffledQuestions[currentQuestion].correctAnswer) {
       return ["rgba(76, 175, 80, 0.8)", "rgba(139, 195, 74, 0.8)"]; // Green for correct
     } else if (selectedAnswer === optionIndex) {
       return ["rgba(244, 67, 54, 0.8)", "rgba(229, 115, 115, 0.8)"]; // Red for incorrect selection
@@ -313,13 +626,18 @@ export default function AstronomyQuiz() {
           <Text style={styles.infoTitle}>Quiz Information:</Text>
           <Text style={styles.infoText}>
             • {quizQuestions.length} multiple choice questions
-          </Text>
+          </Text>{" "}
           <Text style={styles.infoText}>• 30 seconds per question</Text>
           <Text style={styles.infoText}>
             • Immediate feedback with explanations
           </Text>
           <Text style={styles.infoText}>
-            • Categories: Solar System, Stars, Galaxies, Physics
+            • Finish quiz anytime or let it auto-complete
+          </Text>
+          <Text style={styles.infoText}>
+            • Categories: Solar System, Stars & Galaxies, Cosmic Phenomena,
+            Cosmology, Space Technology, Physics, Space Exploration, Space
+            Phenomena
           </Text>
         </View>
 
@@ -346,9 +664,10 @@ export default function AstronomyQuiz() {
       </LinearGradient>
     </ScrollView>
   );
-
   const renderQuizComplete = () => {
-    const percentage = Math.round((score / quizQuestions.length) * 100);
+    const totalAnswered = userAnswers.length;
+    const percentage =
+      totalAnswered > 0 ? Math.round((score / totalAnswered) * 100) : 0;
     let performanceMessage = "";
     let performanceColor = "#FF6B6B";
 
@@ -376,7 +695,7 @@ export default function AstronomyQuiz() {
 
           <View style={styles.scoreContainer}>
             <Text style={styles.finalScore}>
-              {score}/{quizQuestions.length}
+              {score}/{totalAnswered}
             </Text>
             <Text style={styles.percentage}>{percentage}%</Text>
           </View>
@@ -394,31 +713,35 @@ export default function AstronomyQuiz() {
           )}
 
           <View style={styles.summaryContainer}>
-            <Text style={styles.summaryTitle}>Question Summary:</Text>
-            {quizQuestions.map((question, index) => (
-              <View key={index} style={styles.summaryItem}>
-                <Text style={styles.summaryQuestion}>
-                  {index + 1}. {question.question}
-                </Text>
-                <Text
-                  style={[
-                    styles.summaryResult,
-                    {
-                      color:
-                        userAnswers[index] === question.correctAnswer
-                          ? "#4ECDC4"
-                          : "#FF6B6B",
-                    },
-                  ]}
-                >
-                  {userAnswers[index] === question.correctAnswer
-                    ? "✓ Correct"
-                    : userAnswers[index] === -1
-                    ? "⏰ Time Out"
-                    : "✗ Incorrect"}
-                </Text>
-              </View>
-            ))}
+            <Text style={styles.summaryTitle}>
+              Question Summary ({totalAnswered} answered):
+            </Text>
+            {shuffledQuestions
+              .slice(0, totalAnswered)
+              .map((question, index) => (
+                <View key={index} style={styles.summaryItem}>
+                  <Text style={styles.summaryQuestion}>
+                    {index + 1}. {question.question}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.summaryResult,
+                      {
+                        color:
+                          userAnswers[index] === question.correctAnswer
+                            ? "#4ECDC4"
+                            : "#FF6B6B",
+                      },
+                    ]}
+                  >
+                    {userAnswers[index] === question.correctAnswer
+                      ? "✓ Correct"
+                      : userAnswers[index] === -1
+                      ? "⏰ Time Out"
+                      : "✗ Incorrect"}
+                  </Text>
+                </View>
+              ))}
           </View>
 
           <View style={styles.buttonContainer}>
@@ -439,21 +762,26 @@ export default function AstronomyQuiz() {
       </ScrollView>
     );
   };
-
   const renderQuestion = () => {
-    const question = quizQuestions[currentQuestion];
+    if (!shuffledQuestions || shuffledQuestions.length === 0) {
+      return null; // Don't render if no questions are loaded
+    }
+
+    const question = shuffledQuestions[currentQuestion];
 
     return (
       <ScrollView contentContainerStyle={styles.questionContainer}>
         {/* Progress and Timer */}
         <View style={styles.progressContainer}>
           <View style={styles.progressInfo}>
+            {" "}
             <Text style={styles.progressText}>
-              Question {currentQuestion + 1} of {quizQuestions.length}
+              Question {currentQuestion + 1} of {shuffledQuestions.length}
             </Text>
             <Text style={styles.categoryText}>{question.category}</Text>
-          </View>
+          </View>{" "}
           <View style={styles.timerContainer}>
+            {" "}
             <Text
               style={[
                 styles.timerText,
@@ -472,7 +800,7 @@ export default function AstronomyQuiz() {
               styles.progressFill,
               {
                 width: `${
-                  ((currentQuestion + 1) / quizQuestions.length) * 100
+                  ((currentQuestion + 1) / shuffledQuestions.length) * 100
                 }%`,
               },
             ]}
@@ -485,7 +813,6 @@ export default function AstronomyQuiz() {
           style={styles.questionCard}
         >
           <Text style={styles.questionText}>{question.question}</Text>
-
           {/* Answer Options */}
           <View style={styles.optionsContainer}>
             {question.options.map((option, index) => (
@@ -515,9 +842,69 @@ export default function AstronomyQuiz() {
                 </LinearGradient>
               </TouchableOpacity>
             ))}
+          </View>{" "}
+          {/* Action Buttons */}
+          <View style={styles.actionContainer}>
+            <View style={styles.buttonRowContainer}>
+              {/* Finish Quiz Button - Show only if not all questions answered */}
+              {userAnswers.length < shuffledQuestions.length && (
+                <TouchableOpacity
+                  style={styles.finishButton}
+                  onPress={handleFinishQuiz}
+                  activeOpacity={0.8}
+                >
+                  <LinearGradient
+                    colors={["#FF6B6B", "#FF8E8E"]}
+                    style={styles.finishButtonGradient}
+                  >
+                    <Text style={styles.finishButtonText}>FINISH NOW</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              )}{" "}
+              {!showExplanation ? (
+                <TouchableOpacity
+                  style={[
+                    styles.submitButton,
+                    userAnswers.length >= shuffledQuestions.length &&
+                      styles.singleButton,
+                    { opacity: selectedAnswer !== null ? 1 : 0.5 },
+                  ]}
+                  onPress={handleAnswerSubmit}
+                  disabled={selectedAnswer === null}
+                  activeOpacity={0.8}
+                >
+                  <LinearGradient
+                    colors={["#4A90E2", "#357ABD"]}
+                    style={styles.actionButtonGradient}
+                  >
+                    <Text style={styles.actionButtonText}>SUBMIT</Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={[
+                    styles.nextButton,
+                    userAnswers.length >= shuffledQuestions.length &&
+                      styles.singleButton,
+                  ]}
+                  onPress={handleNextQuestion}
+                  activeOpacity={0.8}
+                >
+                  <LinearGradient
+                    colors={["#A8E6CF", "#7FCDCD"]}
+                    style={styles.actionButtonGradient}
+                  >
+                    <Text style={styles.actionButtonText}>
+                      {currentQuestion < shuffledQuestions.length - 1
+                        ? "NEXT"
+                        : "FINISH"}
+                    </Text>
+                  </LinearGradient>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
-
-          {/* Explanation */}
+          {/* Explanation - Moved below action buttons */}
           {showExplanation && (
             <View style={styles.explanationContainer}>
               <LinearGradient
@@ -531,45 +918,6 @@ export default function AstronomyQuiz() {
               </LinearGradient>
             </View>
           )}
-
-          {/* Action Buttons */}
-          <View style={styles.actionContainer}>
-            {!showExplanation ? (
-              <TouchableOpacity
-                style={[
-                  styles.submitButton,
-                  { opacity: selectedAnswer !== null ? 1 : 0.5 },
-                ]}
-                onPress={handleAnswerSubmit}
-                disabled={selectedAnswer === null}
-                activeOpacity={0.8}
-              >
-                <LinearGradient
-                  colors={["#4A90E2", "#357ABD"]}
-                  style={styles.actionButtonGradient}
-                >
-                  <Text style={styles.actionButtonText}>SUBMIT ANSWER</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.nextButton}
-                onPress={handleNextQuestion}
-                activeOpacity={0.8}
-              >
-                <LinearGradient
-                  colors={["#A8E6CF", "#7FCDCD"]}
-                  style={styles.actionButtonGradient}
-                >
-                  <Text style={styles.actionButtonText}>
-                    {currentQuestion < quizQuestions.length - 1
-                      ? "NEXT QUESTION"
-                      : "FINISH QUIZ"}
-                  </Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
-          </View>
         </LinearGradient>
       </ScrollView>
     );
@@ -794,23 +1142,42 @@ const styles = StyleSheet.create({
   },
   actionContainer: {
     alignItems: "center",
+    paddingVertical: 10,
+  },
+  buttonRowContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+    paddingHorizontal: 10,
+    gap: 10,
   },
   submitButton: {
-    width: "80%",
+    flex: 1,
   },
   nextButton: {
+    flex: 1,
+  },
+  singleButton: {
+    alignSelf: "center",
     width: "80%",
   },
   actionButtonGradient: {
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 25,
     borderRadius: 25,
     alignItems: "center",
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   actionButtonText: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#FFFFFF",
+    textAlign: "center",
   },
   completeContainer: {
     flexGrow: 1,
@@ -908,5 +1275,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#FFFFFF",
+  },
+  mainActionContainer: {
+    marginBottom: 10,
+    alignItems: "center",
+  },
+  finishButton: {
+    flex: 1,
+  },
+  finishButtonGradient: {
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#FF6B6B",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+  },
+  finishButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textAlign: "center",
   },
 });
