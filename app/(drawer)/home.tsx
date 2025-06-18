@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 const { width } = Dimensions.get("window");
 
@@ -37,18 +37,8 @@ export default function HomeScreen() {
       astronomyFacts[Math.floor(Math.random() * astronomyFacts.length)];
     setDailyFact(randomFact);
   }, []);
-
   const navigateToScreen = (screen: string) => {
-    if (
-      (screen === "game" || screen === "quiz" || screen === "profile") &&
-      !user
-    ) {
-      Alert.alert("Login Required", "Please log in to access this feature.", [
-        { text: "Cancel", style: "cancel" },
-        { text: "Login", onPress: () => router.push("./login") },
-      ]);
-      return;
-    }
+    // No longer blocking access for guest users - they can play games and quizzes
     router.push(`./${screen}`);
   };
   const menuItems = [
@@ -72,7 +62,6 @@ export default function HomeScreen() {
       icon: "🚀",
       screen: "game",
       gradient: ["#A8E6CF", "#7FCDCD"] as const,
-      requiresLogin: true,
     },
     {
       title: "Astronomy Quiz",
@@ -80,23 +69,25 @@ export default function HomeScreen() {
       icon: "🌟",
       screen: "quiz",
       gradient: ["#FFD93D", "#6BCF7F"] as const,
-      requiresLogin: true,
     },
-    {
-      title: user ? "Profile" : "Login",
-      subtitle: user
-        ? `Welcome back, ${user.username}!`
-        : "Access your space journey",
-      icon: user ? "👨‍🚀" : "🔐",
-      screen: user ? "profile" : "login",
-      gradient: ["#A8CABA", "#5D4E75"] as const,
-    },
+    ...(user
+      ? [
+          {
+            title: user.isGuest ? "Guest Profile" : "Profile",
+            subtitle: user.isGuest
+              ? "Your guest progress & achievements"
+              : `Welcome back, ${user.username}!`,
+            icon: "👨‍🚀",
+            screen: "profile",
+            gradient: ["#A8CABA", "#5D4E75"] as const,
+          },
+        ]
+      : []),
   ];
-
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/images/TwoFace.jpg")}
+        source={require("../../assets/images/TwoFace.jpg")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -120,8 +111,7 @@ export default function HomeScreen() {
               <Text style={styles.headerSubtitle}>
                 Your gateway to the wonders of the universe
               </Text>
-            </View>
-
+            </View>{" "}
             {/* Fact of the Day Section */}
             <View style={styles.factSection}>
               <LinearGradient
@@ -135,8 +125,61 @@ export default function HomeScreen() {
                 </Text>
                 <Text style={styles.factText}>{dailyFact}</Text>
               </LinearGradient>
-            </View>
-
+            </View>{" "}
+            {/* Guest User Notice */}
+            {user && user.isGuest && (
+              <View style={styles.guestNoticeSection}>
+                <LinearGradient
+                  colors={["rgba(76, 175, 80, 0.8)", "rgba(67, 160, 71, 0.8)"]}
+                  style={styles.guestNoticeCard}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <Text style={styles.guestNoticeTitle}>
+                    🚀 Guest Explorer Mode Active
+                  </Text>
+                  <Text style={styles.guestNoticeText}>
+                    You're exploring as a guest! Your progress is being saved
+                    locally. Create an account to sync your achievements across
+                    devices.
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.guestLoginButton}
+                    onPress={() => router.push("../login")}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.guestLoginButtonText}>
+                      Create Account
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            )}
+            {!user && (
+              <View style={styles.guestNoticeSection}>
+                <LinearGradient
+                  colors={["rgba(255, 165, 0, 0.8)", "rgba(255, 140, 0, 0.8)"]}
+                  style={styles.guestNoticeCard}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <Text style={styles.guestNoticeTitle}>
+                    🌟 Start Your Space Journey
+                  </Text>
+                  <Text style={styles.guestNoticeText}>
+                    Ready to begin exploring? Choose to create an account for
+                    full features or continue as a guest to start immediately!
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.guestLoginButton}
+                    onPress={() => router.push("../../")}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.guestLoginButtonText}>Get Started</Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            )}
             {/* Menu Grid */}
             <View style={styles.menuGrid}>
               {menuItems.map((item, index) => (
@@ -152,19 +195,16 @@ export default function HomeScreen() {
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 1 }}
                   >
+                    {" "}
                     <View style={styles.menuCard}>
                       <Text style={styles.menuIcon}>{item.icon}</Text>
                       <Text style={styles.menuTitle}>{item.title}</Text>
                       <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
-                      {item.requiresLogin && !user && (
-                        <Text style={styles.loginRequired}>Login Required</Text>
-                      )}
                     </View>
                   </LinearGradient>
                 </TouchableOpacity>
               ))}
             </View>
-
             {/* User Stats (if logged in) */}
             {user && (
               <View style={styles.statsSection}>
@@ -192,7 +232,6 @@ export default function HomeScreen() {
                 </LinearGradient>
               </View>
             )}
-
             {/* Footer */}
             <View style={styles.footer}>
               <Text style={styles.footerText}>
@@ -372,5 +411,42 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#888888",
     fontStyle: "italic",
+  },
+  guestNoticeSection: {
+    marginHorizontal: 20,
+    marginBottom: 20,
+  },
+  guestNoticeCard: {
+    padding: 20,
+    borderRadius: 15,
+    alignItems: "center",
+  },
+  guestNoticeTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  guestNoticeText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    textAlign: "center",
+    lineHeight: 20,
+    marginBottom: 15,
+    opacity: 0.9,
+  },
+  guestLoginButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  guestLoginButtonText: {
+    color: "#FFFFFF",
+    fontSize: 14,
+    fontWeight: "600",
   },
 });

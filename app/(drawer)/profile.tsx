@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ProfileScreen() {
   const { user, logout } = useAuth();
@@ -66,7 +66,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/images/TwoFace.jpg")}
+        source={require("../../assets/images/TwoFace.jpg")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -79,26 +79,34 @@ export default function ProfileScreen() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
+            {" "}
             {/* Profile Header */}
             <View style={styles.header}>
               <LinearGradient
-                colors={["rgba(74, 144, 226, 0.9)", "rgba(53, 122, 189, 0.9)"]}
+                colors={
+                  user.isGuest
+                    ? ["rgba(76, 175, 80, 0.9)", "rgba(67, 160, 71, 0.9)"]
+                    : ["rgba(74, 144, 226, 0.9)", "rgba(53, 122, 189, 0.9)"]
+                }
                 style={styles.profileCard}
               >
                 <View style={styles.avatarContainer}>
                   <Text style={styles.avatar}>👨‍🚀</Text>
                 </View>
-                <Text style={styles.username}>{user.username}</Text>
+                <Text style={styles.username}>
+                  {user.isGuest ? "Guest Explorer" : user.username}
+                </Text>
+                {user.isGuest && (
+                  <Text style={styles.guestBadge}>🌟 Guest Mode</Text>
+                )}
                 <Text style={styles.achievementLevel}>
                   {achievementIcon} {achievementLevel}
                 </Text>
               </LinearGradient>
             </View>
-
             {/* Stats Section */}
             <View style={styles.statsSection}>
               <Text style={styles.sectionTitle}>🏆 Your Achievements</Text>
-
               <View style={styles.statsGrid}>
                 {/* Game Score Card */}
                 <LinearGradient
@@ -128,7 +136,6 @@ export default function ProfileScreen() {
                   <Text style={styles.statSubLabel}>Best Score</Text>
                 </LinearGradient>
               </View>
-
               {/* Total Score */}
               <LinearGradient
                 colors={[
@@ -142,9 +149,48 @@ export default function ProfileScreen() {
                 <Text style={styles.totalScoreSubtext}>
                   Combine your game and quiz scores to unlock achievements!
                 </Text>
-              </LinearGradient>
+              </LinearGradient>{" "}
             </View>
-
+            {/* Guest Benefits Section */}
+            {user.isGuest && (
+              <View style={styles.guestInfoSection}>
+                <LinearGradient
+                  colors={["rgba(76, 175, 80, 0.9)", "rgba(67, 160, 71, 0.9)"]}
+                  style={styles.guestInfoCard}
+                >
+                  <Text style={styles.guestInfoTitle}>
+                    🌟 Guest Explorer Benefits
+                  </Text>
+                  <Text style={styles.guestInfoText}>
+                    As a guest, your progress is saved locally on this device!
+                    You can:
+                  </Text>
+                  <View style={styles.guestBenefitsList}>
+                    <Text style={styles.guestBenefit}>
+                      ✅ Play all games and quizzes
+                    </Text>
+                    <Text style={styles.guestBenefit}>
+                      ✅ Save high scores locally
+                    </Text>
+                    <Text style={styles.guestBenefit}>
+                      ✅ Earn achievement badges
+                    </Text>
+                    <Text style={styles.guestBenefit}>
+                      ✅ Track your cosmic journey
+                    </Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.upgradeAccountButton}
+                    onPress={() => router.push("../register")}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.upgradeAccountText}>
+                      Create Account to Sync Progress
+                    </Text>
+                  </TouchableOpacity>
+                </LinearGradient>
+              </View>
+            )}
             {/* Achievement Badges */}
             <View style={styles.badgesSection}>
               <Text style={styles.sectionTitle}>🏅 Achievement Badges</Text>
@@ -217,7 +263,6 @@ export default function ProfileScreen() {
                 </View>
               </View>
             </View>
-
             {/* Action Buttons */}
             <View style={styles.actionsSection}>
               <TouchableOpacity
@@ -471,5 +516,59 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#FFFFFF",
+  },
+  guestBadge: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 15,
+    marginBottom: 8,
+    overflow: "hidden",
+  },
+  guestInfoSection: {
+    padding: 20,
+  },
+  guestInfoCard: {
+    padding: 20,
+    borderRadius: 15,
+  },
+  guestInfoTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  guestInfoText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 15,
+    opacity: 0.9,
+  },
+  guestBenefitsList: {
+    marginBottom: 20,
+  },
+  guestBenefit: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    marginBottom: 8,
+    opacity: 0.9,
+  },
+  upgradeAccountButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  upgradeAccountText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
   },
 });

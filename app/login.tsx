@@ -97,7 +97,6 @@ export default function LoginScreen() {
                       autoCorrect={false}
                     />
                   </View>
-
                   {/* Password Input */}
                   <View style={styles.inputContainer}>
                     <Text style={styles.inputLabel}>Password</Text>
@@ -112,7 +111,6 @@ export default function LoginScreen() {
                       autoCorrect={false}
                     />
                   </View>
-
                   {/* Login Button */}
                   <TouchableOpacity
                     style={styles.loginButton}
@@ -129,14 +127,12 @@ export default function LoginScreen() {
                       </Text>
                     </LinearGradient>
                   </TouchableOpacity>
-
                   {/* Divider */}
                   <View style={styles.dividerContainer}>
                     <View style={styles.divider} />
                     <Text style={styles.dividerText}>OR</Text>
                     <View style={styles.divider} />
                   </View>
-
                   {/* Register Button */}
                   <TouchableOpacity
                     style={styles.registerButton}
@@ -154,22 +150,7 @@ export default function LoginScreen() {
                         Create New Account
                       </Text>
                     </LinearGradient>
-                  </TouchableOpacity>
-                </LinearGradient>
-              </View>
-
-              {/* Demo Credentials */}
-              <View style={styles.demoSection}>
-                <LinearGradient
-                  colors={["rgba(255, 215, 0, 0.1)", "rgba(255, 215, 0, 0.05)"]}
-                  style={styles.demoCard}
-                >
-                  <Text style={styles.demoTitle}>🎮 Demo Account</Text>
-                  <Text style={styles.demoText}>Username: demo</Text>
-                  <Text style={styles.demoText}>Password: password</Text>
-                  <Text style={styles.demoNote}>
-                    Use these credentials to explore all features!
-                  </Text>
+                  </TouchableOpacity>{" "}
                 </LinearGradient>
               </View>
 
@@ -287,35 +268,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600",
-  },
-  demoSection: {
-    marginBottom: 30,
-  },
-  demoCard: {
-    padding: 20,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: "rgba(255, 215, 0, 0.2)",
-    alignItems: "center",
-  },
-  demoTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#FFD700",
-    marginBottom: 10,
-  },
-  demoText: {
-    fontSize: 14,
-    color: "#FFD700",
-    marginBottom: 5,
-    fontFamily: "monospace",
-  },
-  demoNote: {
-    fontSize: 12,
-    color: "#CCCCCC",
-    textAlign: "center",
-    marginTop: 8,
-    fontStyle: "italic",
   },
   footer: {
     alignItems: "center",

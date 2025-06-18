@@ -12,6 +12,7 @@ interface User {
   username: string;
   gameHighScore: number;
   quizHighScore: number;
+  isGuest?: boolean;
 }
 
 // Auth context interface
@@ -19,6 +20,7 @@ interface AuthContextType {
   user: User | null;
   login: (username: string, password: string) => Promise<boolean>;
   register: (username: string, password: string) => Promise<boolean>;
+  loginAsGuest: () => Promise<void>;
   logout: () => Promise<void>;
   updateGameScore: (score: number) => Promise<void>;
   updateQuizScore: (score: number) => Promise<void>;
@@ -39,17 +41,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   useEffect(() => {
     loadUserData();
   }, []);
-
   const loadUserData = async () => {
     try {
       const userData = await AsyncStorage.getItem("currentUser");
       if (userData) {
         setUser(JSON.parse(userData));
+      } else {
+        // Check if there's guest data
+        const guestData = await AsyncStorage.getItem("guestUser");
+        if (guestData) {
+          setUser(JSON.parse(guestData));
+        }
       }
     } catch (error) {
       console.error("Error loading user data:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loginAsGuest = async () => {
+    try {
+      // Check if guest user already exists
+      const existingGuestData = await AsyncStorage.getItem("guestUser");
+      let guestUser: User;
+
+      if (existingGuestData) {
+        guestUser = JSON.parse(existingGuestData);
+      } else {
+        guestUser = {
+          username: "Guest Explorer",
+          gameHighScore: 0,
+          quizHighScore: 0,
+          isGuest: true,
+        };
+        await AsyncStorage.setItem("guestUser", JSON.stringify(guestUser));
+      }
+
+      setUser(guestUser);
+      await AsyncStorage.setItem("currentUser", JSON.stringify(guestUser));
+    } catch (error) {
+      console.error("Error setting up guest user:", error);
     }
   };
 
@@ -128,7 +160,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       console.error("Error logging out:", error);
     }
   };
-
   const updateGameScore = async (score: number) => {
     if (!user) return;
 
@@ -139,12 +170,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         setUser(updatedUser);
         await AsyncStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
-        // Update in users data
-        const existingUsers = await AsyncStorage.getItem("users");
-        const users = existingUsers ? JSON.parse(existingUsers) : {};
-        if (users[user.username]) {
-          users[user.username].gameHighScore = score;
-          await AsyncStorage.setItem("users", JSON.stringify(users));
+        if (user.isGuest) {
+          // Update guest data
+          await AsyncStorage.setItem("guestUser", JSON.stringify(updatedUser));
+        } else {
+          // Update in users data for registered users
+          const existingUsers = await AsyncStorage.getItem("users");
+          const users = existingUsers ? JSON.parse(existingUsers) : {};
+          if (users[user.username]) {
+            users[user.username].gameHighScore = score;
+            await AsyncStorage.setItem("users", JSON.stringify(users));
+          }
         }
       }
     } catch (error) {
@@ -162,23 +198,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         setUser(updatedUser);
         await AsyncStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
-        // Update in users data
-        const existingUsers = await AsyncStorage.getItem("users");
-        const users = existingUsers ? JSON.parse(existingUsers) : {};
-        if (users[user.username]) {
-          users[user.username].quizHighScore = score;
-          await AsyncStorage.setItem("users", JSON.stringify(users));
+        if (user.isGuest) {
+          // Update guest data
+          await AsyncStorage.setItem("guestUser", JSON.stringify(updatedUser));
+        } else {
+          // Update in users data for registered users
+          const existingUsers = await AsyncStorage.getItem("users");
+          const users = existingUsers ? JSON.parse(existingUsers) : {};
+          if (users[user.username]) {
+            users[user.username].quizHighScore = score;
+            await AsyncStorage.setItem("users", JSON.stringify(users));
+          }
         }
       }
     } catch (error) {
       console.error("Error updating quiz score:", error);
     }
   };
-
   const value: AuthContextType = {
     user,
     login,
     register,
+    loginAsGuest,
     logout,
     updateGameScore,
     updateQuizScore,

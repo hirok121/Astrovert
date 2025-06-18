@@ -10,8 +10,8 @@ import {
   Animated,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { useAuth } from "../contexts/AuthContext";
-import { playSound, SoundType, configureAudio } from "../utils/soundManager";
+import { useAuth } from "../../contexts/AuthContext";
+import { playSound, SoundType, configureAudio } from "../../utils/soundManager";
 
 interface QuizQuestion {
   id: number;
@@ -578,7 +578,7 @@ export default function AstronomyQuiz() {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/images/TwoFace.jpg")}
+        source={require("../../assets/images/TwoFace.jpg")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >

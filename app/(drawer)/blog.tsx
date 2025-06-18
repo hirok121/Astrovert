@@ -19,7 +19,7 @@ const blogPosts = [
     title: "James Webb Telescope Discovers Ancient Galaxies",
     snippet:
       "The James Webb Space Telescope has captured images of galaxies that formed when the universe was just 400 million years old, providing unprecedented insights into cosmic evolution...",
-    image: require("../assets/images/react-logo.png"), // Placeholder
+    image: require("../../assets/images/react-logo.png"), // Placeholder
     author: "Dr. Sarah Chen",
     date: "2024-01-15",
     category: "Discoveries",
@@ -43,7 +43,7 @@ The James Webb telescope continues to revolutionize astronomy, and these discove
     title: "The Mystery of Fast Radio Bursts Solved",
     snippet:
       "Scientists have finally identified the source of mysterious fast radio bursts that have puzzled astronomers for years. These powerful cosmic signals originate from magnetars...",
-    image: require("../assets/images/react-logo.png"), // Placeholder
+    image: require("../../assets/images/react-logo.png"), // Placeholder
     author: "Prof. Michael Torres",
     date: "2024-01-10",
     category: "Research",
@@ -69,7 +69,7 @@ Future research will focus on using FRBs as tools to study the cosmos, potential
     title: "Mars Perseverance Rover Finds Organic Molecules",
     snippet:
       "NASA's Perseverance rover has discovered complex organic molecules in Martian rocks, bringing us closer to answering the age-old question: Was there ever life on Mars?",
-    image: require("../assets/images/react-logo.png"), // Placeholder
+    image: require("../../assets/images/react-logo.png"), // Placeholder
     author: "Dr. Jennifer Walsh",
     date: "2024-01-05",
     category: "Planetary Science",
@@ -97,7 +97,7 @@ This discovery adds to the growing body of evidence that Mars was once a more ha
     title: "Breakthrough in Exoplanet Atmosphere Analysis",
     snippet:
       "Using advanced spectroscopy techniques, astronomers have detected water vapor, clouds, and even potential biosignatures in the atmospheres of distant exoplanets...",
-    image: require("../assets/images/react-logo.png"), // Placeholder
+    image: require("../../assets/images/react-logo.png"), // Placeholder
     author: "Dr. Amanda Rodriguez",
     date: "2024-01-01",
     category: "Exoplanets",
@@ -129,7 +129,7 @@ The next generation of telescopes, including the Extremely Large Telescopes curr
     title: "Black Hole Collision Creates Gravitational Waves",
     snippet:
       "The LIGO-Virgo collaboration has detected gravitational waves from the most massive black hole merger ever observed, providing new insights into these cosmic phenomena...",
-    image: require("../assets/images/react-logo.png"), // Placeholder
+    image: require("../../assets/images/react-logo.png"), // Placeholder
     author: "Prof. David Kim",
     date: "2023-12-28",
     category: "Gravitational Physics",
@@ -247,11 +247,10 @@ export default function BlogScreen() {
       </Text>
     </View>
   );
-
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require("../assets/images/TwoFace.jpg")}
+        source={require("../../assets/images/TwoFace.jpg")}
         style={styles.backgroundImage}
         resizeMode="cover"
       >

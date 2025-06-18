@@ -10,12 +10,20 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { router } from "expo-router";
+import { useAuth } from "../contexts/AuthContext";
 
 const { width, height } = Dimensions.get("window");
 
 export default function App() {
+  const { loginAsGuest } = useAuth();
+
   const handleEnterApp = () => {
-    router.push("./home");
+    router.push("/(drawer)/home");
+  };
+
+  const handleGuestEntry = async () => {
+    await loginAsGuest();
+    router.push("/(drawer)/home");
   };
 
   return (
@@ -46,24 +54,34 @@ export default function App() {
                 and test your astronomy knowledge in this interactive space
                 experience.
               </Text>
-            </View>
-
-            {/* Enter Button */}
-            <TouchableOpacity
-              style={styles.enterButton}
-              onPress={handleEnterApp}
-              activeOpacity={0.8}
-            >
-              <LinearGradient
-                colors={["#4A90E2", "#357ABD", "#2E5B8A"]}
-                style={styles.buttonGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
+            </View>{" "}
+            {/* Authentication Buttons */}
+            <View style={styles.authSection}>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={() => router.push("/login")}
+                activeOpacity={0.8}
               >
-                <Text style={styles.buttonText}>ENTER THE COSMOS</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                <LinearGradient
+                  colors={["#4A90E2", "#357ABD"]}
+                  style={styles.authButtonGradient}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <Text style={styles.authButtonText}>LOGIN</Text>
+                </LinearGradient>
+              </TouchableOpacity>
 
+              <TouchableOpacity
+                style={styles.guestButton}
+                onPress={handleGuestEntry}
+                activeOpacity={0.8}
+              >
+                <View style={styles.guestButtonBackground}>
+                  <Text style={styles.guestButtonText}>CONTINUE AS GUEST</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
             {/* Bottom Info */}
             <View style={styles.bottomInfo}>
               <Text style={styles.bottomText}>
@@ -133,6 +151,55 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 24,
     paddingHorizontal: 20,
+  },
+  authSection: {
+    alignItems: "center",
+    marginBottom: 40,
+    width: "100%",
+  },
+  loginButton: {
+    marginBottom: 15,
+    width: "80%",
+  },
+  registerButton: {
+    marginBottom: 15,
+    width: "80%",
+  },
+  guestButton: {
+    marginTop: 10,
+    width: "80%",
+  },
+  authButtonGradient: {
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    borderRadius: 25,
+    elevation: 6,
+    shadowColor: "#4A90E2",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+  },
+  authButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+    letterSpacing: 1,
+  },
+  guestButtonBackground: {
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    borderRadius: 25,
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  guestButtonText: {
+    color: "#CCCCCC",
+    fontSize: 16,
+    fontWeight: "600",
+    textAlign: "center",
+    letterSpacing: 1,
   },
   enterButton: {
     marginBottom: 40,

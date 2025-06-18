@@ -322,12 +322,12 @@ export default function GalaxiesScreen() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ImageBackground
-        source={require("../assets/images/andremeda.jpg")}
+        source={require("../../assets/images/andremeda.jpg")}
         style={styles.container}
         blurRadius={3}
       >
+        {" "}
         <View style={styles.overlay}>
-          {" "}
           <Text style={styles.title}>3D Galaxy Viewer</Text>
           <View style={styles.controls}>
             <TouchableOpacity
@@ -346,7 +346,7 @@ export default function GalaxiesScreen() {
               ]}
               onPress={() => setCurrentModel("andromeda")}
             >
-              <Text style={styles.buttonText}>Andromeda Style</Text>{" "}
+              <Text style={styles.buttonText}>Andromeda Style</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.resetButton]}
@@ -367,9 +367,9 @@ export default function GalaxiesScreen() {
               style={[styles.button, styles.zoomButton]}
               onPress={zoomIn}
             >
-              <Text style={styles.buttonText}>Zoom In</Text>
+              <Text style={styles.buttonText}>Zoom In</Text>{" "}
             </TouchableOpacity>
-          </View>{" "}
+          </View>
           <Text style={styles.status}>{status}</Text>
           <View style={styles.canvasContainer}>
             <PinchGestureHandler
@@ -391,10 +391,11 @@ export default function GalaxiesScreen() {
             </PinchGestureHandler>
           </View>
           <View style={styles.infoPanel}>
+            {" "}
             <Text style={styles.infoTitle}>
               {currentModel === "andromeda"
                 ? "Andromeda-Style Galaxy"
-                : "Spiral Galaxy"}{" "}
+                : "Spiral Galaxy"}
             </Text>
             <Text style={styles.infoText}>
               {currentModel === "andromeda"

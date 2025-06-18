@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import { AuthProvider } from "../contexts/AuthContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,27 +21,23 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
-
   return (
-    <AuthProvider>
-      <ThemeProvider value={DarkTheme}>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="home" options={{ headerShown: false }} />
-          <Stack.Screen name="blog" options={{ title: "Astronomy Blog" }} />
-          <Stack.Screen
-            name="galaxies"
-            options={{ title: "3D Galaxy Explorer" }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <ThemeProvider value={DarkTheme}>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
+            <Stack.Screen name="login" options={{ title: "Login" }} />
+            <Stack.Screen name="register" options={{ title: "Register" }} />
+          </Stack>
+          <StatusBar
+            style="light"
+            backgroundColor="#1a1a2e"
+            translucent={false}
           />
-          <Stack.Screen name="game" options={{ title: "Asteroid Dodger" }} />
-          <Stack.Screen name="quiz" options={{ title: "Astronomy Quiz" }} />
-          <Stack.Screen name="login" options={{ title: "Login" }} />
-          <Stack.Screen name="register" options={{ title: "Register" }} />
-          <Stack.Screen name="profile" options={{ title: "User Profile" }} />
-          <Stack.Screen name="blog/[id]" options={{ title: "Blog Post" }} />
-        </Stack>
-        <StatusBar style="light" />
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
