@@ -150,7 +150,7 @@ export default function LoginScreen() {
                         Create New Account
                       </Text>
                     </LinearGradient>
-                  </TouchableOpacity>{" "}
+                  </TouchableOpacity>
                 </LinearGradient>
               </View>
 

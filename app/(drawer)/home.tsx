@@ -100,7 +100,6 @@ export default function HomeScreen() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            {" "}
             {/* Header Section */}
             <View style={styles.headerContainer}>
               <View style={styles.header}>
@@ -114,7 +113,7 @@ export default function HomeScreen() {
                   Your gateway to the wonders of the universe
                 </Text>
               </View>
-            </View>{" "}
+            </View>
             {/* Fact of the Day Section */}
             <View style={styles.factSection}>
               <LinearGradient
@@ -129,7 +128,7 @@ export default function HomeScreen() {
                   </Text>
                   <Text style={styles.factText}>{dailyFact}</Text>
                 </View>
-              </LinearGradient>{" "}
+              </LinearGradient>
             </View>
             {/* Menu Grid */}
             <View style={styles.menuContainer}>
@@ -157,7 +156,7 @@ export default function HomeScreen() {
                   </TouchableOpacity>
                 ))}
               </View>
-            </View>{" "}
+            </View>
             {/* User Stats (if logged in) */}
             {user && (
               <View style={styles.statsContainer}>
@@ -187,7 +186,7 @@ export default function HomeScreen() {
                       </View>
                       <Text style={styles.statLabel}>Quiz Best Score</Text>
                     </View>
-                  </View>{" "}
+                  </View>
                 </LinearGradient>
               </View>
             )}

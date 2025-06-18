@@ -348,7 +348,6 @@ export default function GalaxiesScreen() {
         style={styles.container}
         blurRadius={3}
       >
-        {" "}
         <View style={styles.overlay}>
           <Text
             style={styles.title}
@@ -366,7 +365,7 @@ export default function GalaxiesScreen() {
               onPress={() => setCurrentModel("galaxy")}
             >
               <Text style={styles.buttonText}>Spiral Galaxy</Text>
-            </TouchableOpacity>{" "}
+            </TouchableOpacity>
             <TouchableOpacity
               style={[
                 styles.button,
@@ -396,7 +395,7 @@ export default function GalaxiesScreen() {
                 </View>
               </PanGestureHandler>
             </PinchGestureHandler>
-          </View>{" "}
+          </View>
           <View style={styles.modelControls}>
             <TouchableOpacity
               style={[styles.button, styles.zoomButton]}
@@ -410,14 +409,13 @@ export default function GalaxiesScreen() {
             >
               <Text style={styles.buttonText}>Zoom Out</Text>
             </TouchableOpacity>
-          </View>{" "}
+          </View>
           <View style={styles.infoPanel}>
-            {" "}
             <Text style={styles.infoTitle}>
               {currentModel === "andromeda"
                 ? "Andromeda Galaxy"
                 : "Spiral Galaxy"}
-            </Text>{" "}
+            </Text>
             <Text
               style={styles.infoText}
               numberOfLines={4}

@@ -72,7 +72,7 @@ export default function CustomHeader({
             {/* Center - Title */}
             <View style={styles.centerContainer}>
               <Text style={styles.title}>{title}</Text>
-            </View>{" "}
+            </View>
             {/* Right Side - Profile Icon */}
             <View style={styles.rightContainer}>
               {user ? (
@@ -95,7 +95,7 @@ export default function CustomHeader({
                   <Ionicons name="person-outline" size={24} color="#666" />
                 </TouchableOpacity>
               )}
-            </View>{" "}
+            </View>
           </View>
         </LinearGradient>
       </SafeAreaView>

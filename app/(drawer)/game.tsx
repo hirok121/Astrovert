@@ -441,7 +441,7 @@ export default function AsteroidDodgerGame() {
         <Text style={styles.finalScore}>Final Score: {score}</Text>
         {user && score > user.gameHighScore && (
           <Text style={styles.newHighScore}>🎉 NEW HIGH SCORE!</Text>
-        )}{" "}
+        )}
         <TouchableOpacity
           style={styles.restartButton}
           onPress={restartGame}
@@ -483,10 +483,8 @@ export default function AsteroidDodgerGame() {
         >
           {gameState === "menu" && renderGameMenu()}
           {gameState === "gameOver" && renderGameOver()}
-
           {gameState === "playing" && (
             <View style={styles.gameArea} {...panResponder.panHandlers}>
-              {" "}
               {/* Game UI */}
               <View style={styles.gameUI}>
                 <Text style={styles.scoreText}>Score: {score}</Text>
@@ -496,7 +494,7 @@ export default function AsteroidDodgerGame() {
                 {hasShield && (
                   <Text style={styles.shieldText}>🛡️ SHIELD ACTIVE</Text>
                 )}
-              </View>{" "}
+              </View>
               {/* Player spaceship */}
               <View
                 style={[

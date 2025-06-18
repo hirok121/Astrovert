@@ -54,7 +54,7 @@ export default function App() {
                 and test your astronomy knowledge in this interactive space
                 experience.
               </Text>
-            </View>{" "}
+            </View>
             {/* Authentication Buttons */}
             <View style={styles.authSection}>
               <TouchableOpacity

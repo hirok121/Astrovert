@@ -626,7 +626,7 @@ export default function AstronomyQuiz() {
           <Text style={styles.infoTitle}>Quiz Information:</Text>
           <Text style={styles.infoText}>
             • {quizQuestions.length} multiple choice questions
-          </Text>{" "}
+          </Text>
           <Text style={styles.infoText}>• 30 seconds per question</Text>
           <Text style={styles.infoText}>
             • Immediate feedback with explanations
@@ -774,14 +774,12 @@ export default function AstronomyQuiz() {
         {/* Progress and Timer */}
         <View style={styles.progressContainer}>
           <View style={styles.progressInfo}>
-            {" "}
             <Text style={styles.progressText}>
               Question {currentQuestion + 1} of {shuffledQuestions.length}
             </Text>
             <Text style={styles.categoryText}>{question.category}</Text>
-          </View>{" "}
+          </View>
           <View style={styles.timerContainer}>
-            {" "}
             <Text
               style={[
                 styles.timerText,
@@ -792,7 +790,6 @@ export default function AstronomyQuiz() {
             </Text>
           </View>
         </View>
-
         {/* Progress Bar */}
         <View style={styles.progressBar}>
           <View
@@ -806,7 +803,6 @@ export default function AstronomyQuiz() {
             ]}
           />
         </View>
-
         {/* Question Card */}
         <LinearGradient
           colors={["rgba(255, 255, 255, 0.1)", "rgba(255, 255, 255, 0.05)"]}
@@ -842,7 +838,7 @@ export default function AstronomyQuiz() {
                 </LinearGradient>
               </TouchableOpacity>
             ))}
-          </View>{" "}
+          </View>
           {/* Action Buttons */}
           <View style={styles.actionContainer}>
             <View style={styles.buttonRowContainer}>
@@ -860,7 +856,7 @@ export default function AstronomyQuiz() {
                     <Text style={styles.finishButtonText}>FINISH NOW</Text>
                   </LinearGradient>
                 </TouchableOpacity>
-              )}{" "}
+              )}
               {!showExplanation ? (
                 <TouchableOpacity
                   style={[

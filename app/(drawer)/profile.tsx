@@ -79,7 +79,6 @@ export default function ProfileScreen() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            {" "}
             {/* Profile Header */}
             <View style={styles.header}>
               <LinearGradient
@@ -149,7 +148,7 @@ export default function ProfileScreen() {
                 <Text style={styles.totalScoreSubtext}>
                   Combine your game and quiz scores to unlock achievements!
                 </Text>
-              </LinearGradient>{" "}
+              </LinearGradient>
             </View>
             {/* Guest Benefits Section */}
             {user.isGuest && (
