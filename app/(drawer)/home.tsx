@@ -100,17 +100,20 @@ export default function HomeScreen() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
+            {" "}
             {/* Header Section */}
-            <View style={styles.header}>
-              <Text style={styles.appTitle}>ASTROVERT</Text>
-              <Text style={styles.welcomeText}>
-                {user
-                  ? `Welcome back, ${user.username}!`
-                  : "Welcome to the Cosmos!"}
-              </Text>
-              <Text style={styles.headerSubtitle}>
-                Your gateway to the wonders of the universe
-              </Text>
+            <View style={styles.headerContainer}>
+              <View style={styles.header}>
+                <Text style={styles.appTitle}>ASTROVERT</Text>
+                <Text style={styles.welcomeText}>
+                  {user
+                    ? `Welcome back, ${user.username}!`
+                    : "Welcome to the Cosmos!"}
+                </Text>
+                <Text style={styles.headerSubtitle}>
+                  Your gateway to the wonders of the universe
+                </Text>
+              </View>
             </View>{" "}
             {/* Fact of the Day Section */}
             <View style={styles.factSection}>
@@ -120,12 +123,74 @@ export default function HomeScreen() {
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
               >
-                <Text style={styles.factTitle}>
-                  🌠 Astronomy Fact of the Day
-                </Text>
-                <Text style={styles.factText}>{dailyFact}</Text>
-              </LinearGradient>
+                <View style={styles.factContent}>
+                  <Text style={styles.factTitle}>
+                    🌠 Astronomy Fact of the Day
+                  </Text>
+                  <Text style={styles.factText}>{dailyFact}</Text>
+                </View>
+              </LinearGradient>{" "}
+            </View>
+            {/* Menu Grid */}
+            <View style={styles.menuContainer}>
+              <Text style={styles.sectionTitle}>Explore the Universe</Text>
+              <View style={styles.menuGrid}>
+                {menuItems.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.menuItem}
+                    onPress={() => navigateToScreen(item.screen)}
+                    activeOpacity={0.8}
+                  >
+                    <LinearGradient
+                      colors={item.gradient}
+                      style={styles.menuCardGradient}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 1 }}
+                    >
+                      <View style={styles.menuCard}>
+                        <Text style={styles.menuIcon}>{item.icon}</Text>
+                        <Text style={styles.menuTitle}>{item.title}</Text>
+                        <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
+                      </View>
+                    </LinearGradient>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>{" "}
+            {/* User Stats (if logged in) */}
+            {user && (
+              <View style={styles.statsContainer}>
+                <Text style={styles.sectionTitle}>Your Journey</Text>
+                <LinearGradient
+                  colors={[
+                    "rgba(255, 255, 255, 0.1)",
+                    "rgba(255, 255, 255, 0.05)",
+                  ]}
+                  style={styles.statsCard}
+                >
+                  <View style={styles.statsGrid}>
+                    <View style={styles.statItem}>
+                      <View style={styles.statValueContainer}>
+                        <Text style={styles.statValue}>
+                          {user.gameHighScore}
+                        </Text>
+                      </View>
+                      <Text style={styles.statLabel}>Game High Score</Text>
+                    </View>
+                    <View style={styles.statDivider} />
+                    <View style={styles.statItem}>
+                      <View style={styles.statValueContainer}>
+                        <Text style={styles.statValue}>
+                          {user.quizHighScore}
+                        </Text>
+                      </View>
+                      <Text style={styles.statLabel}>Quiz Best Score</Text>
+                    </View>
+                  </View>{" "}
+                </LinearGradient>
+              </View>
+            )}
             {/* Guest User Notice */}
             {user && user.isGuest && (
               <View style={styles.guestNoticeSection}>
@@ -135,23 +200,25 @@ export default function HomeScreen() {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={styles.guestNoticeTitle}>
-                    🚀 Guest Explorer Mode Active
-                  </Text>
-                  <Text style={styles.guestNoticeText}>
-                    You're exploring as a guest! Your progress is being saved
-                    locally. Create an account to sync your achievements across
-                    devices.
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.guestLoginButton}
-                    onPress={() => router.push("../login")}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.guestLoginButtonText}>
-                      Create Account
+                  <View style={styles.guestNoticeContent}>
+                    <Text style={styles.guestNoticeTitle}>
+                      🚀 Guest Explorer Mode Active
                     </Text>
-                  </TouchableOpacity>
+                    <Text style={styles.guestNoticeText}>
+                      You're exploring as a guest! Your progress is being saved
+                      locally. Create an account to sync your achievements
+                      across devices.
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.guestLoginButton}
+                      onPress={() => router.push("../login")}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.guestLoginButtonText}>
+                        Create Account
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </LinearGradient>
               </View>
             )}
@@ -163,80 +230,34 @@ export default function HomeScreen() {
                   start={{ x: 0, y: 0 }}
                   end={{ x: 1, y: 1 }}
                 >
-                  <Text style={styles.guestNoticeTitle}>
-                    🌟 Start Your Space Journey
-                  </Text>
-                  <Text style={styles.guestNoticeText}>
-                    Ready to begin exploring? Choose to create an account for
-                    full features or continue as a guest to start immediately!
-                  </Text>
-                  <TouchableOpacity
-                    style={styles.guestLoginButton}
-                    onPress={() => router.push("../../")}
-                    activeOpacity={0.8}
-                  >
-                    <Text style={styles.guestLoginButtonText}>Get Started</Text>
-                  </TouchableOpacity>
-                </LinearGradient>
-              </View>
-            )}
-            {/* Menu Grid */}
-            <View style={styles.menuGrid}>
-              {menuItems.map((item, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.menuItem}
-                  onPress={() => navigateToScreen(item.screen)}
-                  activeOpacity={0.8}
-                >
-                  <LinearGradient
-                    colors={item.gradient}
-                    style={styles.menuCardGradient}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                  >
-                    {" "}
-                    <View style={styles.menuCard}>
-                      <Text style={styles.menuIcon}>{item.icon}</Text>
-                      <Text style={styles.menuTitle}>{item.title}</Text>
-                      <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
-                    </View>
-                  </LinearGradient>
-                </TouchableOpacity>
-              ))}
-            </View>
-            {/* User Stats (if logged in) */}
-            {user && (
-              <View style={styles.statsSection}>
-                <LinearGradient
-                  colors={[
-                    "rgba(255, 255, 255, 0.1)",
-                    "rgba(255, 255, 255, 0.05)",
-                  ]}
-                  style={styles.statsCard}
-                >
-                  <Text style={styles.statsTitle}>
-                    Your Space Journey Stats
-                  </Text>
-                  <View style={styles.statsRow}>
-                    <View style={styles.statItem}>
-                      <Text style={styles.statValue}>{user.gameHighScore}</Text>
-                      <Text style={styles.statLabel}>Game High Score</Text>
-                    </View>
-                    <View style={styles.statDivider} />
-                    <View style={styles.statItem}>
-                      <Text style={styles.statValue}>{user.quizHighScore}</Text>
-                      <Text style={styles.statLabel}>Quiz Best Score</Text>
-                    </View>
+                  <View style={styles.guestNoticeContent}>
+                    <Text style={styles.guestNoticeTitle}>
+                      🌟 Start Your Space Journey
+                    </Text>
+                    <Text style={styles.guestNoticeText}>
+                      Ready to begin exploring? Choose to create an account for
+                      full features or continue as a guest to start immediately!
+                    </Text>
+                    <TouchableOpacity
+                      style={styles.guestLoginButton}
+                      onPress={() => router.push("../../")}
+                      activeOpacity={0.8}
+                    >
+                      <Text style={styles.guestLoginButtonText}>
+                        Get Started
+                      </Text>
+                    </TouchableOpacity>
                   </View>
                 </LinearGradient>
               </View>
             )}
             {/* Footer */}
-            <View style={styles.footer}>
-              <Text style={styles.footerText}>
-                Explore • Learn • Discover • Play
-              </Text>
+            <View style={styles.footerContainer}>
+              <View style={styles.footer}>
+                <Text style={styles.footerText}>
+                  Explore • Learn • Discover • Play
+                </Text>
+              </View>
             </View>
           </ScrollView>
         </LinearGradient>
@@ -260,13 +281,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    flexGrow: 1,
     paddingBottom: 30,
+  },
+  headerContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
   },
   header: {
     alignItems: "center",
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    marginBottom: 30,
+    justifyContent: "center",
+    paddingTop: 40,
+    paddingBottom: 20,
+    minHeight: 120,
   },
   appTitle: {
     fontSize: 36,
@@ -295,13 +322,19 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   factCard: {
-    padding: 20,
     borderRadius: 15,
     elevation: 5,
     shadowColor: "#4A90E2",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
+    minHeight: 120,
+  },
+  factContent: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
   factTitle: {
     fontSize: 18,
@@ -315,15 +348,40 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     lineHeight: 20,
     textAlign: "center",
+    flex: 1,
+    textAlignVertical: "center",
   },
-  menuGrid: {
+  menuContainer: {
+    flex: 1,
     paddingHorizontal: 20,
     marginBottom: 30,
   },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 20,
+    textShadowColor: "rgba(0, 0, 0, 0.7)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  menuGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "stretch",
+    gap: 15,
+  },
   menuItem: {
-    marginBottom: 15,
+    width: "48%",
+    minHeight: 140,
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: "45%",
   },
   menuCardGradient: {
+    flex: 1,
     borderRadius: 15,
     elevation: 6,
     shadowColor: "#000",
@@ -332,27 +390,28 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
   },
   menuCard: {
-    padding: 20,
+    flex: 1,
+    padding: 15,
     alignItems: "center",
-    minHeight: 120,
     justifyContent: "center",
   },
   menuIcon: {
-    fontSize: 32,
+    fontSize: 28,
     marginBottom: 8,
   },
   menuTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#FFFFFF",
     marginBottom: 5,
     textAlign: "center",
   },
   menuSubtitle: {
-    fontSize: 14,
+    fontSize: 12,
     color: "#FFFFFF",
     textAlign: "center",
     opacity: 0.9,
+    lineHeight: 16,
   },
   loginRequired: {
     fontSize: 12,
@@ -360,7 +419,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontWeight: "600",
   },
-  statsSection: {
+  statsContainer: {
     paddingHorizontal: 20,
     marginBottom: 30,
   },
@@ -370,14 +429,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.2)",
   },
-  statsTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#FFFFFF",
-    textAlign: "center",
-    marginBottom: 15,
-  },
-  statsRow: {
+  statsGrid: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
@@ -386,39 +438,64 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+  statValueContainer: {
+    backgroundColor: "rgba(74, 144, 226, 0.3)",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 12,
+    marginBottom: 8,
+  },
   statDivider: {
     width: 1,
-    height: 40,
+    height: 50,
     backgroundColor: "rgba(255, 255, 255, 0.3)",
     marginHorizontal: 20,
   },
   statValue: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#4A90E2",
-    marginBottom: 5,
+    color: "#FFFFFF",
   },
   statLabel: {
     fontSize: 14,
     color: "#CCCCCC",
     textAlign: "center",
   },
+  footerContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    marginTop: "auto",
+  },
   footer: {
     alignItems: "center",
-    paddingHorizontal: 20,
+    justifyContent: "center",
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderTopColor: "rgba(255, 255, 255, 0.1)",
   },
   footerText: {
     fontSize: 16,
     color: "#888888",
     fontStyle: "italic",
+    textAlign: "center",
   },
   guestNoticeSection: {
-    marginHorizontal: 20,
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    marginBottom: 25,
   },
   guestNoticeCard: {
-    padding: 20,
     borderRadius: 15,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    minHeight: 150,
+  },
+  guestNoticeContent: {
+    flex: 1,
+    padding: 20,
+    justifyContent: "space-between",
     alignItems: "center",
   },
   guestNoticeTitle: {
@@ -426,27 +503,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#FFFFFF",
     textAlign: "center",
-    marginBottom: 10,
+    marginBottom: 12,
   },
   guestNoticeText: {
     fontSize: 14,
     color: "#FFFFFF",
     textAlign: "center",
     lineHeight: 20,
-    marginBottom: 15,
-    opacity: 0.9,
+    marginBottom: 18,
+    opacity: 0.95,
+    flex: 1,
   },
   guestLoginButton: {
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    paddingHorizontal: 20,
-    paddingVertical: 8,
-    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 25,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.3)",
+    borderColor: "rgba(255, 255, 255, 0.4)",
+    elevation: 2,
+    alignSelf: "center",
   },
   guestLoginButtonText: {
     color: "#FFFFFF",
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "600",
   },
 });

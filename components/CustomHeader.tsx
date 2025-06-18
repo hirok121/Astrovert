@@ -106,7 +106,7 @@ export default function CustomHeader({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#1a1a2e",
-    paddingTop: getStatusBarHeight(),
+    paddingTop: 0, //getStatusBarHeight(),
   },
   safeArea: {
     backgroundColor: "#1a1a2e",
