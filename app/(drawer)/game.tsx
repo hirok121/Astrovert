@@ -13,6 +13,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { useAuth } from "../../contexts/AuthContext";
 import { playSound, SoundType, configureAudio } from "../../utils/soundManager";
+import { router } from "expo-router";
 
 const { width, height } = Dimensions.get("window");
 
@@ -54,31 +55,34 @@ export default function AsteroidDodgerGame() {
   // Load sound effects
   useEffect(() => {
     configureAudio();
-  }, []);
-  // Player movement with pan responder
+  }, []); // Player movement with pan responder
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => gameState === "playing",
     onPanResponderGrant: () => {},
     onPanResponderMove: (evt, gestureState) => {
       if (gameState === "playing") {
         const newX = Math.max(25, Math.min(width - 25, gestureState.moveX));
-        const newY = Math.max(50, Math.min(height - 50, gestureState.moveY));
+        // Lift spacecraft above finger by 120 pixels
+        const newY = Math.max(
+          50,
+          Math.min(height - 50, gestureState.moveY - 120)
+        );
         setPlayerPosition({ x: newX, y: newY });
       }
     },
     onPanResponderRelease: () => {},
   });
-
-  // Generate random asteroid
+  // Generate random asteroid with scaling difficulty
   const generateAsteroid = useCallback((): Asteroid => {
+    const difficultyMultiplier = Math.min(3, 1 + score / 500); // Cap at 3x difficulty
     return {
       id: Math.random().toString(),
       x: Math.random() * (width - 40),
       y: -50,
-      speed: 2 + Math.random() * 3 * gameSpeed,
+      speed: 2 + Math.random() * 3 * difficultyMultiplier,
       size: 20 + Math.random() * 20,
     };
-  }, [gameSpeed]);
+  }, [score]);
 
   // Generate random power-up
   const generatePowerUp = useCallback((): PowerUp => {
@@ -103,7 +107,6 @@ export default function AsteroidDodgerGame() {
     );
     return distance < radius1 + radius2;
   };
-
   // Start game
   const startGame = () => {
     setGameState("playing");
@@ -116,12 +119,11 @@ export default function AsteroidDodgerGame() {
     setHasShield(false);
     setGameSpeed(1);
 
-    // Start game loops
-    gameLoopRef.current = setInterval(updateGame, 50);
+    // Start game loops with dynamic spawning
+    gameLoopRef.current = setInterval(updateGame, 16); // 60 FPS for smoother motion
     asteroidSpawnRef.current = setInterval(spawnAsteroid, 1500);
     powerUpSpawnRef.current = setInterval(spawnPowerUp, 8000);
   };
-
   // Update game state
   const updateGame = () => {
     setAsteroids((prev) => {
@@ -143,13 +145,23 @@ export default function AsteroidDodgerGame() {
     // Increase score over time
     setScore((prev) => prev + 1);
 
-    // Increase game speed gradually
-    setGameSpeed((prev) => Math.min(3, prev + 0.001));
+    // Increase game speed gradually with upper limit
+    setGameSpeed((prev) => Math.min(2.5, prev + 0.0005));
   };
-
-  // Spawn asteroid
+  // Spawn asteroid with dynamic frequency based on score
   const spawnAsteroid = () => {
     setAsteroids((prev) => [...prev, generateAsteroid()]);
+
+    // Spawn additional asteroids based on score (max 3 per spawn)
+    const extraAsteroids = Math.min(2, Math.floor(score / 300));
+    for (let i = 0; i < extraAsteroids; i++) {
+      if (Math.random() < 0.4) {
+        // 40% chance for each extra asteroid
+        setTimeout(() => {
+          setAsteroids((prev) => [...prev, generateAsteroid()]);
+        }, Math.random() * 500); // Stagger the spawning
+      }
+    }
   };
 
   // Spawn power-up
@@ -158,20 +170,27 @@ export default function AsteroidDodgerGame() {
       // 30% chance to spawn power-up
       setPowerUps((prev) => [...prev, generatePowerUp()]);
     }
-  };
-
-  // Handle collisions
+  }; // Handle collisions
   useEffect(() => {
     if (gameState !== "playing" || isInvulnerable) return;
+
+    let collisionDetected = false;
 
     // Check asteroid collisions
     asteroids.forEach((asteroid) => {
       if (checkCollision(playerPosition, asteroid, 25, asteroid.size / 2)) {
-        if (hasShield) {
-          setHasShield(false);
-          playSound(SoundType.POWER_UP, 0.5);
-        } else {
-          handleCollision();
+        if (!collisionDetected) {
+          // Prevent multiple collisions in same frame
+          // Remove the collided asteroid immediately
+          setAsteroids((prev) => prev.filter((a) => a.id !== asteroid.id));
+
+          if (hasShield) {
+            setHasShield(false);
+            playSound(SoundType.POWER_UP, 0.5);
+          } else {
+            handleCollision();
+          }
+          collisionDetected = true;
         }
       }
     });
@@ -252,6 +271,11 @@ export default function AsteroidDodgerGame() {
     startGame();
   };
 
+  // Go back to home
+  const goToHome = () => {
+    router.push("/(drawer)/home");
+  };
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -320,11 +344,9 @@ export default function AsteroidDodgerGame() {
       >
         <Text style={styles.gameOverTitle}>💥 GAME OVER</Text>
         <Text style={styles.finalScore}>Final Score: {score}</Text>
-
         {user && score > user.gameHighScore && (
           <Text style={styles.newHighScore}>🎉 NEW HIGH SCORE!</Text>
-        )}
-
+        )}{" "}
         <TouchableOpacity
           style={styles.restartButton}
           onPress={restartGame}
@@ -335,6 +357,18 @@ export default function AsteroidDodgerGame() {
             style={styles.restartButtonGradient}
           >
             <Text style={styles.restartButtonText}>PLAY AGAIN</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.restartButton, { marginTop: 15 }]}
+          onPress={goToHome}
+          activeOpacity={0.8}
+        >
+          <LinearGradient
+            colors={["#6B73FF", "#9B59B6"]}
+            style={styles.restartButtonGradient}
+          >
+            <Text style={styles.restartButtonText}>🏠 BACK TO HOME</Text>
           </LinearGradient>
         </TouchableOpacity>
       </LinearGradient>
@@ -366,8 +400,7 @@ export default function AsteroidDodgerGame() {
                 {hasShield && (
                   <Text style={styles.shieldText}>🛡️ SHIELD ACTIVE</Text>
                 )}
-              </View>
-
+              </View>{" "}
               {/* Player spaceship */}
               <View
                 style={[
@@ -386,7 +419,6 @@ export default function AsteroidDodgerGame() {
                   </View>
                 )}
               </View>
-
               {/* Asteroids */}
               {asteroids.map((asteroid) => (
                 <View
@@ -411,7 +443,6 @@ export default function AsteroidDodgerGame() {
                   </Text>
                 </View>
               ))}
-
               {/* Power-ups */}
               {powerUps.map((powerUp) => (
                 <View
