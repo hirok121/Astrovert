@@ -82,15 +82,18 @@ export default function AsteroidDodgerGame() {
           playLoopingSound(SoundType.SPACE_AMBIENT, 0.2);
         }
       }, 500);
-
       return () => {
         // Mark component as unmounted for cleanup
         isMountedRef.current = false;
 
         // Clean up when leaving screen - stop all sounds immediately
         clearTimeout(timer);
-        stopLoopingSound(SoundType.SPACE_AMBIENT);
-        stopLoopingSound(SoundType.GAME_BACKGROUND);
+
+        // Stop sounds with error handling
+        Promise.all([
+          stopLoopingSound(SoundType.SPACE_AMBIENT).catch(console.log),
+          stopLoopingSound(SoundType.GAME_BACKGROUND).catch(console.log),
+        ]);
 
         // Force reset to menu state to stop any ongoing game loops
         setTimeout(() => {
@@ -103,9 +106,11 @@ export default function AsteroidDodgerGame() {
       };
     }, [])
   );
-
   // Handle game state changes for ambient sound
   useEffect(() => {
+    // Don't play sounds if component is unmounted (navigating away)
+    if (!isMountedRef.current) return;
+
     if (gameState === "menu" || gameState === "gameOver") {
       playLoopingSound(SoundType.SPACE_AMBIENT, 0.2);
     } else {
@@ -335,15 +340,21 @@ export default function AsteroidDodgerGame() {
   const restartGame = () => {
     playSound(SoundType.BUTTON_CLICK, 0.7);
     startGame();
-  };
-  // Go back to home
-  const goToHome = () => {
+  }; // Go back to home
+  const goToHome = async () => {
     playSound(SoundType.BUTTON_CLICK, 0.7);
 
     // Mark as unmounted and stop all sounds before navigating
     isMountedRef.current = false;
-    stopLoopingSound(SoundType.SPACE_AMBIENT);
-    stopLoopingSound(SoundType.GAME_BACKGROUND);
+
+    // Stop all sounds with proper async handling
+    try {
+      await stopLoopingSound(SoundType.SPACE_AMBIENT);
+      await stopLoopingSound(SoundType.GAME_BACKGROUND);
+    } catch (error) {
+      console.log("Error stopping sounds:", error);
+    }
+
     setBackgroundMusicPlaying(false);
 
     // Force reset game state
@@ -351,14 +362,21 @@ export default function AsteroidDodgerGame() {
     setAsteroids([]);
     setPowerUps([]);
 
-    router.push("/(drawer)/home");
+    // Add a small delay to ensure sounds are stopped before navigation
+    setTimeout(() => {
+      router.push("/(drawer)/home");
+    }, 100);
   }; // Cleanup on unmount
   useEffect(() => {
     return () => {
       // Mark as unmounted and stop all sounds when component unmounts
       isMountedRef.current = false;
-      stopLoopingSound(SoundType.SPACE_AMBIENT);
-      stopLoopingSound(SoundType.GAME_BACKGROUND);
+
+      // Stop all sounds with error handling
+      Promise.all([
+        stopLoopingSound(SoundType.SPACE_AMBIENT).catch(console.log),
+        stopLoopingSound(SoundType.GAME_BACKGROUND).catch(console.log),
+      ]);
     };
   }, []);
 
