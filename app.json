@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/loading.jpg",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hirok434.Astrovert"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d9a2ec48-4ba8-4126-a259-3033e97c545d"
+      }
     }
   }
 }

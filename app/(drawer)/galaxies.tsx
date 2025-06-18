@@ -16,7 +16,14 @@ import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
 import { Renderer } from "expo-three";
 import * as THREE from "three";
 import { useFocusEffect } from "@react-navigation/native";
-import { SoundManager, SoundType } from "../../utils/soundManager";
+// import { SoundManager, SoundType } from "../../utils/soundManager";
+import {
+  playSound,
+  SoundType,
+  configureAudio,
+  playLoopingSound,
+  stopLoopingSound,
+} from "../../utils/soundManager";
 
 export default function GalaxiesScreen() {
   const [currentModel, setCurrentModel] = useState<"galaxy" | "andromeda">(
@@ -24,26 +31,15 @@ export default function GalaxiesScreen() {
   );
   const [status, setStatus] = useState("Ready to load 3D model");
 
-  // Sound manager instance
-  const soundManagerRef = useRef<SoundManager | null>(null);
-
-  // Initialize sound manager
-  useEffect(() => {
-    soundManagerRef.current = new SoundManager();
-    return () => {
-      soundManagerRef.current?.unloadAllSounds();
-    };
-  }, []);
-
   // Play/stop ambient sound based on screen focus
   useFocusEffect(
     useCallback(() => {
       // Play ambient sound when screen is focused
-      soundManagerRef.current?.playSound(SoundType.SPACE_AMBIENT, 0.3);
+      playLoopingSound(SoundType.SPACE_AMBIENT, 0.3);
 
       return () => {
         // Stop ambient sound when screen loses focus
-        soundManagerRef.current?.stopSound(SoundType.SPACE_AMBIENT);
+        stopLoopingSound(SoundType.SPACE_AMBIENT);
       };
     }, [])
   );
