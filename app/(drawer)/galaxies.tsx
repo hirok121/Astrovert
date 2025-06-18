@@ -1,5 +1,5 @@
 // Clean procedural galaxy viewer - no GLTF dependencies
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -15,12 +15,38 @@ import {
 import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
 import { Renderer } from "expo-three";
 import * as THREE from "three";
+import { useFocusEffect } from "@react-navigation/native";
+import { SoundManager, SoundType } from "../../utils/soundManager";
 
 export default function GalaxiesScreen() {
   const [currentModel, setCurrentModel] = useState<"galaxy" | "andromeda">(
     "galaxy"
   );
   const [status, setStatus] = useState("Ready to load 3D model");
+
+  // Sound manager instance
+  const soundManagerRef = useRef<SoundManager | null>(null);
+
+  // Initialize sound manager
+  useEffect(() => {
+    soundManagerRef.current = new SoundManager();
+    return () => {
+      soundManagerRef.current?.unloadAllSounds();
+    };
+  }, []);
+
+  // Play/stop ambient sound based on screen focus
+  useFocusEffect(
+    useCallback(() => {
+      // Play ambient sound when screen is focused
+      soundManagerRef.current?.playSound(SoundType.SPACE_AMBIENT, 0.3);
+
+      return () => {
+        // Stop ambient sound when screen loses focus
+        soundManagerRef.current?.stopSound(SoundType.SPACE_AMBIENT);
+      };
+    }, [])
+  );
 
   // Rotation state for manual control
   const rotationRef = useRef({ x: 0, y: 0 });
@@ -178,16 +204,12 @@ export default function GalaxiesScreen() {
         } else {
           createSpiralGalaxy(scene);
         }
-        setStatus(
-          "3D Galaxy loaded successfully! Drag to rotate, pinch to zoom. Auto-rotates when idle."
-        );
+        setStatus("Drag to rotate, pinch to zoom.");
 
         const animate = () => {
-          requestAnimationFrame(animate);
-
-          // If user is not interacting, apply automatic rotation
+          requestAnimationFrame(animate); // If user is not interacting, apply automatic rotation
           if (!isInteractingRef.current) {
-            autoRotationRef.current.y += 0.005; // Slow automatic rotation
+            autoRotationRef.current.y += 0.003; // Reduced rotation speed
 
             // Apply automatic rotation to all objects
             scene.children.forEach((child) => {
@@ -328,7 +350,13 @@ export default function GalaxiesScreen() {
       >
         {" "}
         <View style={styles.overlay}>
-          <Text style={styles.title}>3D Galaxy Viewer</Text>
+          <Text
+            style={styles.title}
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}
+          >
+            🌌 Cosmic Galaxy Explorer
+          </Text>
           <View style={styles.controls}>
             <TouchableOpacity
               style={[
@@ -338,7 +366,7 @@ export default function GalaxiesScreen() {
               onPress={() => setCurrentModel("galaxy")}
             >
               <Text style={styles.buttonText}>Spiral Galaxy</Text>
-            </TouchableOpacity>
+            </TouchableOpacity>{" "}
             <TouchableOpacity
               style={[
                 styles.button,
@@ -346,28 +374,7 @@ export default function GalaxiesScreen() {
               ]}
               onPress={() => setCurrentModel("andromeda")}
             >
-              <Text style={styles.buttonText}>Andromeda Style</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.resetButton]}
-              onPress={resetRotation}
-            >
-              <Text style={styles.buttonText}>Reset View</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.zoomControls}>
-            <TouchableOpacity
-              style={[styles.button, styles.zoomButton]}
-              onPress={zoomOut}
-            >
-              <Text style={styles.buttonText}>Zoom Out</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, styles.zoomButton]}
-              onPress={zoomIn}
-            >
-              <Text style={styles.buttonText}>Zoom In</Text>{" "}
+              <Text style={styles.buttonText}>Andromeda</Text>
             </TouchableOpacity>
           </View>
           <Text style={styles.status}>{status}</Text>
@@ -389,18 +396,36 @@ export default function GalaxiesScreen() {
                 </View>
               </PanGestureHandler>
             </PinchGestureHandler>
-          </View>
+          </View>{" "}
+          <View style={styles.modelControls}>
+            <TouchableOpacity
+              style={[styles.button, styles.zoomButton]}
+              onPress={zoomIn}
+            >
+              <Text style={styles.buttonText}>Zoom In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.zoomButton]}
+              onPress={zoomOut}
+            >
+              <Text style={styles.buttonText}>Zoom Out</Text>
+            </TouchableOpacity>
+          </View>{" "}
           <View style={styles.infoPanel}>
             {" "}
             <Text style={styles.infoTitle}>
               {currentModel === "andromeda"
-                ? "Andromeda-Style Galaxy"
+                ? "Andromeda Galaxy"
                 : "Spiral Galaxy"}
-            </Text>
-            <Text style={styles.infoText}>
+            </Text>{" "}
+            <Text
+              style={styles.infoText}
+              numberOfLines={4}
+              ellipsizeMode="tail"
+            >
               {currentModel === "andromeda"
-                ? "An elliptical galaxy model inspired by the Andromeda Galaxy structure. Drag to rotate, pinch to zoom!"
-                : "A spiral galaxy with rotating arms and a bright central core. Drag to rotate, pinch to zoom!"}
+                ? "The Andromeda Galaxy (M31) is our closest major galactic neighbor at 2.5 million light-years away. This massive elliptical galaxy contains over one trillion stars and is on a collision course with the Milky Way, expected to merge in 4.5 billion years."
+                : "A spiral galaxy with rotating arms extending from a bright central bulge. These cosmic structures contain billions of stars, gas, and dust organized in a distinctive pinwheel pattern. Our Milky Way is a similar spiral galaxy."}
             </Text>
           </View>
         </View>
@@ -413,7 +438,7 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   overlay: { flex: 1, backgroundColor: "rgba(0, 0, 0, 0.7)", padding: 20 },
   title: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "center",
@@ -449,7 +474,14 @@ const styles = StyleSheet.create({
   zoomControls: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 10,
+    marginBottom: 5,
+  },
+  modelControls: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 0,
+    flexWrap: "wrap",
   },
   zoomButton: {
     backgroundColor: "rgba(74, 226, 74, 0.8)",
@@ -468,7 +500,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   canvasContainer: {
-    flex: 1,
+    height: "50%",
     borderRadius: 15,
     overflow: "hidden",
     backgroundColor: "#000",
@@ -478,10 +510,10 @@ const styles = StyleSheet.create({
   canvas: { flex: 1 },
   infoPanel: {
     backgroundColor: "rgba(0, 0, 0, 0.8)",
-    padding: 20,
+    padding: 10,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    marginTop: 20,
+    marginTop: 0,
   },
   infoTitle: {
     fontSize: 18,

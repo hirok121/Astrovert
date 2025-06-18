@@ -15,150 +15,126 @@ import { useLocalSearchParams, router } from "expo-router";
 const blogPosts = [
   {
     id: "1",
-    title: "James Webb Telescope Discovers Ancient Galaxies",
+    title: "James Webb Telescope Uncovers Ancient Spiral Galaxies",
     snippet:
-      "The James Webb Space Telescope has captured images of galaxies that formed when the universe was just 400 million years old, providing unprecedented insights into cosmic evolution...",
-    image: require("../../../assets/images/react-logo.png"),
+      "The James Webb Space Telescope has discovered well-formed spiral galaxies from the early universe, including some similar to Andromeda, reshaping our understanding of galaxy evolution...",
+    image: require("../../../assets/images/spiralGalaxy.jpeg"),
     author: "Dr. Sarah Chen",
     date: "2024-01-15",
     category: "Discoveries",
     readTime: "5 min read",
-    content: `The James Webb Space Telescope has made groundbreaking discoveries that are reshaping our understanding of the early universe. These ancient galaxies, observed as they were over 13 billion years ago, reveal that massive galaxy formation occurred much earlier than previously thought.
+    content: `The James Webb Space Telescope has made a stunning breakthrough by detecting ancient spiral galaxies that resemble present-day giants like Andromeda. These galaxies formed just 400 million years after the Big Bang — far earlier than scientists anticipated for such complex structures.
 
-The telescope's infrared capabilities allow it to peer through cosmic dust and see the first light from these primordial galaxies. What's particularly fascinating is that these galaxies appear to be surprisingly massive and well-formed for their age.
+Webb’s infrared vision has revealed that the early universe was far more dynamic and structured than previously believed. Among the most intriguing findings is a galaxy with spiral arms remarkably similar to the Andromeda galaxy, the Milky Way's massive neighbor.
 
 Key Discoveries:
-• Galaxies formed just 400 million years after the Big Bang
-• Some early galaxies are 10 times more massive than expected
-• Star formation rates were incredibly high in the early universe
-• The cosmic web structure was already taking shape
+• Spiral galaxies identified in the first 500 million years
+• Structures resembling Andromeda in early formation
+• High star formation rates and early galactic order
+• Cosmic web patterns forming earlier than expected
 
-These findings challenge existing models of galaxy formation and suggest that the universe evolved more rapidly in its early stages than cosmologists had predicted. The implications for our understanding of dark matter, star formation, and cosmic evolution are profound.
+These results challenge conventional models of galactic formation, suggesting massive spiral galaxies began forming far earlier. Andromeda, which is expected to collide with the Milky Way in about 4 billion years, now appears less unique in its structural complexity.
 
-The James Webb telescope continues to revolutionize astronomy, and these discoveries are just the beginning of what promises to be a golden age of cosmic exploration.`,
+This marks a new chapter in cosmic archaeology, as scientists delve deeper into how grand-design galaxies like Andromeda came to be.`,
   },
   {
     id: "2",
-    title: "The Mystery of Fast Radio Bursts Solved",
+    title: "Fast Radio Bursts Linked to Magnetars in Nearby Galaxies",
     snippet:
-      "Scientists have finally identified the source of mysterious fast radio bursts that have puzzled astronomers for years. These powerful cosmic signals originate from magnetars...",
-    image: require("../../../assets/images/react-logo.png"),
+      "Scientists have connected mysterious fast radio bursts to highly magnetized neutron stars, possibly located in galaxies like Andromeda, offering new insights into cosmic phenomena...",
+    image: require("../../../assets/images/Fast Radio Bursts Linked to Magnetars in Nearby Galaxies.jpeg"),
     author: "Prof. Michael Torres",
     date: "2024-01-10",
     category: "Research",
     readTime: "4 min read",
-    content: `Fast Radio Bursts (FRBs) have been one of astronomy's greatest mysteries since their discovery in 2007. These incredibly powerful bursts of radio waves last only milliseconds but release more energy than the Sun produces in three days.
+    content: `Fast Radio Bursts (FRBs), powerful millisecond-long radio signals from space, have mystified astronomers for over a decade. Recently, scientists linked them to magnetars — highly magnetized neutron stars — some of which may exist in neighboring galaxies, including Andromeda.
 
-Recent breakthroughs have finally solved this cosmic puzzle. The culprits are magnetars - highly magnetized neutron stars with magnetic fields trillions of times stronger than Earth's.
+These violent outbursts are believed to result from sudden reconfigurations of magnetic fields in magnetars, releasing immense energy. The discovery of an FRB from within our galaxy confirmed this theory.
 
-What are Magnetars?
-• Ultra-dense remnants of massive stars
-• Magnetic fields 100 trillion times stronger than Earth's
-• Only 30 known magnetars in our galaxy
-• Can be 20 kilometers wide but contain more mass than our Sun
+What Are Magnetars?
+• Ultra-dense remnants with magnetic fields trillions of times stronger than Earth’s
+• Rare — only about 30 confirmed in the Milky Way
+• Theorized to exist in nearby galaxies like Andromeda
 
-The connection between magnetars and FRBs was confirmed when astronomers detected an FRB from a known magnetar in our own galaxy. This observation provided the missing link in understanding these phenomena.
+The ability to trace FRBs back to spiral galaxies such as Andromeda gives scientists an exciting new way to map intergalactic space and explore the universe’s invisible matter — especially dark matter and cosmic filaments.
 
-The discovery has opened new avenues for studying extreme physics and could help us understand the conditions in the early universe. FRBs might also serve as cosmic lighthouses, helping us map the distribution of matter in the universe.
-
-Future research will focus on using FRBs as tools to study the cosmos, potentially revealing new insights about dark matter and the evolution of galaxies.`,
+As telescope sensitivity improves, scientists hope to detect more FRBs from known spiral galaxies, unraveling how these cosmic lighthouses can act as probes of the distant universe.`,
   },
   {
     id: "3",
-    title: "Mars Perseverance Rover Finds Organic Molecules",
+    title:
+      "Perseverance Rover Finds Organic Molecules, Echoes in Andromeda's Conditions",
     snippet:
-      "NASA's Perseverance rover has discovered complex organic molecules in Martian rocks, bringing us closer to answering the age-old question: Was there ever life on Mars?",
-    image: require("../../../assets/images/react-logo.png"),
+      "NASA’s rover has detected complex organic molecules on Mars, hinting at conditions once similar to those in spiral galaxies like Andromeda...",
+    image: require("../../../assets/images/Perseverance Rover Finds Organic Molecules, Echoes in Andromeda's Conditions.jpeg"),
     author: "Dr. Jennifer Walsh",
     date: "2024-01-05",
     category: "Planetary Science",
     readTime: "6 min read",
-    content: `NASA's Perseverance rover has made a groundbreaking discovery that could change our understanding of Mars' potential for life. The rover has found organic molecules - the building blocks of life as we know it - preserved in ancient Martian rocks.
+    content: `NASA’s Perseverance rover has identified diverse organic molecules in Martian rock samples, reinforcing theories that Mars once had conditions conducive to life — much like certain zones within spiral galaxies such as Andromeda.
 
-This discovery is significant because organic molecules can form through biological processes, though they can also be created by non-biological means. The key is in the diversity and complexity of the molecules found.
+These organic molecules, preserved for over 3 billion years, are potential biosignatures — chemical hints that life may have existed on Mars.
 
-Key Findings:
-• Multiple types of organic molecules detected
-• Molecules preserved in rocks billions of years old
-• Evidence of ancient water activity in the same areas
-• Complex carbon-based compounds similar to those on Earth
+Highlights:
+• Multiple complex carbon-based molecules detected
+• Preservation in ancient sedimentary rocks
+• Indications of long-lost lakes and rivers
+• Analytical tools: PIXL and SHERLOC
 
-The molecules were found in rocks that formed when Mars had liquid water on its surface, approximately 3.5 billion years ago. This was during a period when Mars had a thicker atmosphere and more Earth-like conditions.
+What’s compelling is the comparison to habitable zones found in spiral galaxies like Andromeda, where Earth-like planets could exist. If Mars — within a spiral galaxy — had conditions for life, other planets in similar galaxies might too.
 
-The Perseverance rover used its PIXL (Planetary Instrument for X-ray Lithochemistry) and SHERLOC (Scanning Habitable Environments with Raman & Luminescence for Organics & Chemicals) instruments to make these detections.
-
-While these organic molecules don't definitively prove that life existed on Mars, they show that the Red Planet had the chemical conditions necessary for life to potentially emerge. The next step is bringing these samples back to Earth for more detailed analysis through the Mars Sample Return mission.
-
-This discovery adds to the growing body of evidence that Mars was once a more habitable world and strengthens the case for continued exploration of our planetary neighbor.`,
+As we study Andromeda’s star systems, findings from Mars help set a baseline for what signs of habitability look like across the cosmos.`,
   },
   {
     id: "4",
-    title: "Breakthrough in Exoplanet Atmosphere Analysis",
+    title:
+      "Biosignatures Detected in Exoplanet Atmospheres Across Spiral Galaxies",
     snippet:
-      "Using advanced spectroscopy techniques, astronomers have detected water vapor, clouds, and even potential biosignatures in the atmospheres of distant exoplanets...",
-    image: require("../../../assets/images/react-logo.png"),
+      "Breakthrough spectroscopy reveals water vapor, clouds, and potential biosignatures in exoplanet atmospheres — some within spiral galaxies like Andromeda...",
+    image: require("../../../assets/images/Biosignatures Detected in Exoplanet Atmospheres Across Spiral Galaxies.jpeg"),
     author: "Dr. Amanda Rodriguez",
     date: "2024-01-01",
     category: "Exoplanets",
     readTime: "5 min read",
-    content: `The field of exoplanet research has taken a giant leap forward with new techniques for analyzing the atmospheres of planets orbiting distant stars. These breakthroughs are bringing us closer to finding potentially habitable worlds and even signs of life beyond our solar system.
+    content: `Recent observations using advanced transit spectroscopy have revolutionized our understanding of exoplanet atmospheres. Scientists have identified biosignatures — including water vapor and methane — on planets located within nearby spiral galaxies, including Andromeda.
 
-Recent observations have successfully detected:
-• Water vapor in exoplanet atmospheres
-• Cloud formations on distant worlds
-• Atmospheric composition including oxygen and methane
-• Temperature variations across planetary surfaces
+This leap in analysis allows us to study not just planets in the Milky Way, but potentially habitable worlds orbiting stars in other galaxies.
 
-The key to these discoveries is transit spectroscopy, where astronomers analyze the light filtering through an exoplanet's atmosphere as it passes in front of its host star. Different molecules absorb specific wavelengths of light, creating a unique "fingerprint."
+Key Observations:
+• Biosignature gases: oxygen, methane, and water vapor
+• Temperature gradients and atmospheric escape detected
+• Weather patterns found on gas giants
+• Detection in galaxies like Andromeda adds cosmic perspective
 
-Revolutionary Discoveries:
-• K2-18b shows signs of water vapor in its atmosphere
-• WASP-96b has clear skies with water vapor detected
-• Some exoplanets show signs of atmospheric escape
-• Evidence of weather patterns on distant worlds
+The James Webb Space Telescope's deep-space reach means we're not limited to our galaxy. Its powerful instruments can study transiting exoplanets across spiral galaxies, where habitable conditions might mirror those of Earth.
 
-The James Webb Space Telescope has revolutionized this field with its incredible sensitivity to infrared light. It can detect even trace amounts of molecules in exoplanet atmospheres, opening up possibilities for finding biosignatures.
-
-Biosignatures are molecules that could indicate the presence of life, such as oxygen combined with water vapor, or methane in the presence of other reactive gases. While we haven't definitively found life yet, we're developing the tools and techniques that could make this discovery possible in the coming decades.
-
-The next generation of telescopes, including the Extremely Large Telescopes currently under construction, will further enhance our ability to study exoplanet atmospheres and search for signs of life in the cosmos.`,
+As our understanding of galactic environments grows, Andromeda and other spiral galaxies are now among the most promising hunting grounds for extraterrestrial life.`,
   },
   {
     id: "5",
-    title: "Black Hole Collision Creates Gravitational Waves",
+    title: "Black Hole Collision Detected Near Spiral Galaxy Cluster",
     snippet:
-      "The LIGO-Virgo collaboration has detected gravitational waves from the most massive black hole merger ever observed, providing new insights into these cosmic phenomena...",
-    image: require("../../../assets/images/react-logo.png"),
+      "A massive black hole merger has been detected near a spiral galaxy cluster, adding depth to our understanding of gravitational waves and early galactic environments...",
+    image: require("../../../assets/images/Black Hole Collision Detected Near Spiral Galaxy Cluster.jpeg"),
     author: "Prof. David Kim",
     date: "2023-12-28",
     category: "Gravitational Physics",
     readTime: "4 min read",
-    content: `The Laser Interferometer Gravitational-Wave Observatory (LIGO) and its European counterpart Virgo have detected gravitational waves from the most massive black hole merger ever observed. This discovery provides unprecedented insights into the nature of black holes and the fabric of spacetime itself.
+    content: `The LIGO-Virgo collaboration has recorded gravitational waves from a record-breaking black hole merger that occurred near a cluster of spiral galaxies, including ones resembling Andromeda.
 
-The collision involved two black holes with masses 85 and 66 times that of our Sun, creating a final black hole of approximately 142 solar masses. The "missing" 9 solar masses were converted into gravitational wave energy according to Einstein's famous equation E=mc².
+The collision involved two massive black holes — 85 and 66 times the mass of our Sun — forming an intermediate-mass black hole.
 
-Significance of the Discovery:
-• Confirms existence of intermediate-mass black holes
-• Validates Einstein's predictions about gravitational waves
-• Provides insights into black hole formation in the early universe
-• Opens new window for studying extreme physics
+Significance:
+• Located in a region populated with spiral galaxies
+• Supports the existence of black holes in all galaxy types
+• Gravitational waves traveled for 7 billion years to Earth
+• Validates models of black hole dynamics in dense star-forming regions
 
-What makes this detection particularly exciting is that it falls into the "mass gap" - a range where black holes were thought to be rare. This suggests that our understanding of stellar evolution and black hole formation needs revision.
+The proximity of the event to spiral galaxies suggests such environments play a role in the frequency and intensity of these mergers. Galaxies like Andromeda, rich in stars and dark matter, are perfect cradles for such extreme phenomena.
 
-The gravitational waves from this event traveled for approximately 7 billion years before reaching Earth, carrying information about conditions in the distant universe. The waves were detected as tiny distortions in spacetime - changes in distance smaller than 1/10,000th the width of a proton.
-
-Advanced Detection Technology:
-• Laser interferometry with incredible precision
-• Multiple detectors confirm signals
-• Advanced data analysis algorithms
-• International collaboration of scientists
-
-This discovery opens new avenues for understanding the universe's most extreme objects and could lead to insights about the nature of gravity itself. Future detectors will be even more sensitive, potentially detecting gravitational waves from the Big Bang itself.
-
-The field of gravitational wave astronomy is still in its infancy, but it's already revolutionizing our understanding of the cosmos and providing a completely new way to observe the universe.`,
+With upcoming detectors and more gravitational wave events expected, spiral galaxies are becoming key players in understanding the evolution of black holes and cosmic structure.`,
   },
 ];
-
 export default function BlogDetailScreen() {
   const { id } = useLocalSearchParams();
   const post = blogPosts.find((p) => p.id === id);
