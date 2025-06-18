@@ -16,7 +16,7 @@ import { GLView, ExpoWebGLRenderingContext } from "expo-gl";
 import { Renderer } from "expo-three";
 import * as THREE from "three";
 
-export default function AndromedaScreen() {
+export default function GalaxiesScreen() {
   const [currentModel, setCurrentModel] = useState<"galaxy" | "andromeda">(
     "galaxy"
   );
@@ -151,7 +151,7 @@ export default function AndromedaScreen() {
   };
   const onContextCreate = useCallback(
     async (gl: ExpoWebGLRenderingContext) => {
-      console.log("AndromedaScreen: Creating 3D scene");
+      console.log("GalaxiesScreen: Creating 3D scene");
       setStatus("Creating 3D galaxy...");
 
       try {
@@ -216,7 +216,7 @@ export default function AndromedaScreen() {
       } catch (error: unknown) {
         const errorMessage =
           error instanceof Error ? error.message : String(error);
-        console.error("AndromedaScreen: Error:", errorMessage);
+        console.error("GalaxiesScreen: Error:", errorMessage);
         setStatus(`Error: ${errorMessage}`);
       }
     },

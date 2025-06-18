@@ -213,7 +213,7 @@ export default function RegisterScreen() {
                   colors={["rgba(76, 175, 80, 0.1)", "rgba(76, 175, 80, 0.05)"]}
                   style={styles.infoCard}
                 >
-                  <Text style={styles.infoTitle}>🚀 What You'll Get</Text>
+                  <Text style={styles.infoTitle}>🚀 What You&apos;ll Get</Text>
                   <Text style={styles.infoText}>
                     • Access to the Asteroid Dodger game
                   </Text>
@@ -228,7 +228,7 @@ export default function RegisterScreen() {
               {/* Footer */}
               <View style={styles.footer}>
                 <Text style={styles.footerText}>
-                  🌟 Ready to explore the universe? Let's get started! 🌟
+                  🌟 Ready to explore the universe? Let&apos;s get started! 🌟
                 </Text>
               </View>
             </ScrollView>

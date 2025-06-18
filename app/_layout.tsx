@@ -1,8 +1,4 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -30,20 +26,11 @@ export default function RootLayout() {
       <ThemeProvider value={DarkTheme}>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="welcome" options={{ headerShown: false }} />
           <Stack.Screen name="home" options={{ headerShown: false }} />
           <Stack.Screen name="blog" options={{ title: "Astronomy Blog" }} />
           <Stack.Screen
-            name="andromeda"
-            options={{ title: "3D Andromeda Galaxy" }}
-          />
-          <Stack.Screen
-            name="test-andromeda"
-            options={{ title: "Test Andromeda Model" }}
-          />
-          <Stack.Screen
-            name="simple-3d-test"
-            options={{ title: "Simple 3D Test" }}
+            name="galaxies"
+            options={{ title: "3D Galaxy Explorer" }}
           />
           <Stack.Screen name="game" options={{ title: "Asteroid Dodger" }} />
           <Stack.Screen name="quiz" options={{ title: "Astronomy Quiz" }} />

@@ -16,7 +16,7 @@ A visually stunning and comprehensive React Native mobile application designed f
 - **User-Aware Interface**: Personalized greetings for logged-in users
 - **Quick Stats Display**: Shows user's game and quiz high scores
 
-#### 2. 🌌 3D Andromeda Galaxy Model
+#### 2. 🌌 3D Galaxy Explorer
 
 - **Interactive 3D Models**: Switch between Andromeda Galaxy and generic spiral galaxy
 - **Realistic Rendering**: Uses Three.js and React Three Fiber for smooth 3D rendering
@@ -155,7 +155,7 @@ app/
 ├── home.tsx             # Home dashboard
 ├── blog.tsx             # Blog listing
 ├── blog/[id].tsx        # Individual blog post
-├── andromeda.tsx        # 3D galaxy viewer
+├── galaxies.tsx         # 3D galaxy viewer
 ├── game.tsx             # Asteroid Dodger game
 ├── quiz.tsx             # Astronomy quiz
 ├── login.tsx            # User login

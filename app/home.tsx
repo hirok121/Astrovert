@@ -60,25 +60,11 @@ export default function HomeScreen() {
       gradient: ["#FF6B6B", "#FF8E53"] as const,
     },
     {
-      title: "3D Andromeda Galaxy",
+      title: "3D Galaxy Explorer",
       subtitle: "Interactive galactic exploration",
       icon: "🌌",
-      screen: "andromeda",
+      screen: "galaxies",
       gradient: ["#4ECDC4", "#44A08D"] as const,
-    },
-    {
-      title: "Test Andromeda Model",
-      subtitle: "Simple 3D model loading test",
-      icon: "🧪",
-      screen: "test-andromeda",
-      gradient: ["#9B59B6", "#8E44AD"] as const,
-    },
-    {
-      title: "Simple 3D Test",
-      subtitle: "Basic Three.js rendering test",
-      icon: "🔬",
-      screen: "simple-3d-test",
-      gradient: ["#E74C3C", "#C0392B"] as const,
     },
     {
       title: "Asteroid Dodger",
