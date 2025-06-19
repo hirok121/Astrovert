@@ -50,8 +50,7 @@
     "react-native-web": "^0.20.0",
     "react-native-webview": "13.13.5",
     "three": "^0.166.1",
-    "three-gltf-loader": "^1.111.0",
-    "expo-dev-client": "~5.2.0"
+    "three-gltf-loader": "^1.111.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
