@@ -577,7 +577,7 @@ export default function GalaxiesScreen() {
               <Text style={styles.subtitle}>
                 Interactive 3D Galaxy Visualization
               </Text>
-            </View>{" "}
+            </View>
             <View style={styles.controlsCard}>
               <View style={styles.controls}>
                 <TouchableOpacity
@@ -600,7 +600,7 @@ export default function GalaxiesScreen() {
                 >
                   <Text style={styles.buttonText}>🌌 Andromeda</Text>
                 </TouchableOpacity>
-              </View>{" "}
+              </View>
             </View>
             <Text style={styles.status}>{status}</Text>
             <View style={styles.canvasCard}>
@@ -623,7 +623,7 @@ export default function GalaxiesScreen() {
                   </PanGestureHandler>
                 </PinchGestureHandler>
               </View>
-            </View>{" "}
+            </View>
             <View style={styles.zoomControlsCard}>
               <View style={styles.zoomControls}>
                 <TouchableOpacity
